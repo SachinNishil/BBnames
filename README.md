@@ -29,6 +29,7 @@ and iOS Safari offers "Add to Home Screen".
 | `app.js` | State, swipe gestures, matching, CSV export |
 | `data/names.js` | The name list, generated from the source sheet |
 | `sync.js` | Supabase sync: queue, push, pull, live updates |
+| `MIGRATE-v1.2.sql` | Run once in Supabase when moving to v1.2 |
 | `config.js` | Your Supabase URL and anon key |
 | `supabase-setup.sql` | Run once in Supabase to create the tables |
 | `SETUP-SYNC.md` | Step by step guide to turning sync on |
@@ -67,9 +68,33 @@ See `SETUP-SYNC.md` to turn sync on.
 
 ## Keyboard
 
-Right arrow likes, left arrow passes, down arrow undoes the last swipe.
+Right arrow likes, left arrow passes, up arrow super likes, down arrow undoes.
+
+## Super likes
+
+A vote is `like`, `pass` or `super`. A super counts as a like for matching, and
+marks the name as starred. Either person starring is enough. Starred names sort
+to the top of Matches and have their own filter. Tapping the star in Matches
+flips your own vote between `like` and `super`.
+
+## Shared shuffle
+
+Shuffle is not a local setting. The order comes from a seed held in the
+`settings` table, so both phones deal the same deck and you meet the same names
+at roughly the same time. "Shuffle into a new order" picks a new seed and pushes
+it to both. Names are ordered by a hash of their id and the seed, so adding a
+name slots it in without disturbing the rest of the order.
+
+## Update banner
+
+`sw.js` deliberately does not call `skipWaiting()` on install. A new version
+installs and waits. The app notices, drops a bar down from the top, and the tap
+is what promotes it. So shipping a change is: edit the files, bump `CACHE` in
+`sw.js` and the version in `index.html`, push. Both phones see the bar on their
+next open.
 
 ## Bumping a version
 
-Change `CACHE` in `sw.js` and the version string at the bottom of
-`index.html` whenever you ship, or browsers will keep serving the cached build.
+Change `CACHE` in `sw.js` and the version string at the bottom of `index.html`
+whenever you ship. Skipping this means browsers keep serving the cached build
+and the update bar never appears.

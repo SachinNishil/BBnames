@@ -15,10 +15,15 @@ create table if not exists names (
   created_at timestamptz default now()
 );
 
+create table if not exists settings (
+  key   text primary key,
+  value text
+);
+
 create table if not exists votes (
   profile_id text not null,
   name_id    text not null,
-  verdict    text not null check (verdict in ('like','pass')),
+  verdict    text not null check (verdict in ('like','pass','super')),
   updated_at timestamptz default now(),
   primary key (profile_id, name_id)
 );
@@ -32,22 +37,27 @@ grant usage on schema public to anon, authenticated;
 grant select, insert, update, delete on table profiles to anon, authenticated;
 grant select, insert, update, delete on table names    to anon, authenticated;
 grant select, insert, update, delete on table votes    to anon, authenticated;
+grant select, insert, update, delete on table settings to anon, authenticated;
 
 -- Row level security. This app has no logins, so both phones connect as the
 -- anonymous role and need read and write access to these three tables.
 alter table profiles enable row level security;
 alter table names    enable row level security;
 alter table votes    enable row level security;
+alter table settings enable row level security;
 
 drop policy if exists open_profiles on profiles;
 drop policy if exists open_names    on names;
 drop policy if exists open_votes    on votes;
+drop policy if exists open_settings on settings;
 
 create policy open_profiles on profiles for all using (true) with check (true);
 create policy open_names    on names    for all using (true) with check (true);
 create policy open_votes    on votes    for all using (true) with check (true);
+create policy open_settings on settings for all using (true) with check (true);
 
 -- Live updates. Without this the app falls back to checking every 20 seconds.
 alter publication supabase_realtime add table votes;
 alter publication supabase_realtime add table names;
 alter publication supabase_realtime add table profiles;
+alter publication supabase_realtime add table settings;

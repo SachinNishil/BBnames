@@ -1,12 +1,17 @@
-var CACHE = 'name-swipe-v1.1.0';
+var CACHE = 'name-swipe-v1.2.0';
 var ASSETS = [
   './', './index.html', './styles.css', './app.js', './sync.js', './config.js',
   './vendor/supabase.js', './data/names.js',
   './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png',
   './icons/icon-512-maskable.png', './icons/icon-180.png'
 ];
+// No skipWaiting here on purpose: the new version sits and waits, the app shows
+// the "new version ready" bar, and the tap below is what activates it.
 self.addEventListener('install', function (e) {
-  e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(ASSETS); }).then(function () { return self.skipWaiting(); }));
+  e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(ASSETS); }));
+});
+self.addEventListener('message', function (e) {
+  if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 self.addEventListener('activate', function (e) {
   e.waitUntil(caches.keys().then(function (keys) {
@@ -14,10 +19,10 @@ self.addEventListener('activate', function (e) {
   }).then(function () { return self.clients.claim(); }));
 });
 self.addEventListener('fetch', function (e) {
-  var url = new URL(e.request.url);
   if (e.request.method !== 'GET') return;
-  // Never cache Supabase traffic.
-  if (url.origin !== self.location.origin) return;
+  var url = new URL(e.request.url);
+  if (url.origin !== self.location.origin) return;      // never cache Supabase or fonts
+  if (url.pathname.indexOf('sw.js') > -1) return;        // always fetch the worker fresh
   e.respondWith(
     caches.match(e.request).then(function (hit) {
       return hit || fetch(e.request).then(function (res) {

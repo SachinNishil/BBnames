@@ -43,6 +43,10 @@
       );
     }
     if (op.t === 'reset') return c.from('votes').delete().eq('profile_id', op.profile);
+    if (op.t === 'settings') {
+      var rows = Object.keys(op.kv).map(function (k) { return { key: k, value: String(op.kv[k]) }; });
+      return c.from('settings').upsert(rows, { onConflict: 'key' });
+    }
     if (op.t === 'name') return c.from('names').upsert(op.row, { onConflict: 'id' });
     if (op.t === 'profile') {
       return c.from('profiles').upsert({ id: op.id, display_name: op.name }, { onConflict: 'id' });
@@ -73,7 +77,8 @@
     return Promise.all([
       c.from('votes').select('*'),
       c.from('names').select('*'),
-      c.from('profiles').select('*')
+      c.from('profiles').select('*'),
+      c.from('settings').select('*')
     ]).then(function (res) {
       var err = res.filter(function (r) { return r.error; })[0];
       if (err) { setStatus('error', err.error.message); return; }
@@ -87,7 +92,11 @@
       });
       var pnames = {};
       res[2].data.forEach(function (r) { pnames[r.id] = r.display_name; });
-      if (S.h && S.h.onRemote) S.h.onRemote({ votes: votes, custom: custom, profileNames: pnames });
+      var settings = {};
+      (res[3] && res[3].data ? res[3].data : []).forEach(function (r) { settings[r.key] = r.value; });
+      if (S.h && S.h.onRemote) {
+        S.h.onRemote({ votes: votes, custom: custom, profileNames: pnames, settings: settings });
+      }
       setStatus('live');
     }).catch(function (e) { setStatus('offline', String(e && e.message || e)); });
   }
@@ -129,6 +138,7 @@
           .on('postgres_changes', { event: '*', schema: 'public', table: 'votes' }, nudge)
           .on('postgres_changes', { event: '*', schema: 'public', table: 'names' }, nudge)
           .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, nudge)
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, nudge)
           .subscribe();
       } catch (e) {}
       window.addEventListener('online', sync);
@@ -136,6 +146,7 @@
     },
     pushVote: function (profile, name, verdict) { enqueue({ t: 'vote', profile: profile, name: name, verdict: verdict }); },
     clearVote: function (profile, name) { enqueue({ t: 'vote', profile: profile, name: name, verdict: null }); },
+    pushSettings: function (kv) { enqueue({ t: 'settings', kv: kv }); },
     resetProfile: function (profile) { enqueue({ t: 'reset', profile: profile }); },
     pushName: function (row) { enqueue({ t: 'name', row: row }); },
     pushProfile: function (id, name) { enqueue({ t: 'profile', id: id, name: name }); },
