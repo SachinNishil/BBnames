@@ -4039,5 +4039,2405 @@ window.NAMES = [
 "origin": "Sanskrit",
 "meaning": "Understood; joined, connected",
 "tag": "new"
+},
+{
+"id": "milan-boy",
+"name": "Milan",
+"gender": "boy",
+"origin": "Italian (place)",
+"meaning": "After the city; in Slavic, gracious and dear",
+"tag": "world"
+},
+{
+"id": "luca-boy",
+"name": "Luca",
+"gender": "boy",
+"origin": "Italian",
+"meaning": "One who brings light",
+"tag": "world"
+},
+{
+"id": "elio-boy",
+"name": "Elio",
+"gender": "boy",
+"origin": "Italian / Spanish",
+"meaning": "Of the sun",
+"tag": "world"
+},
+{
+"id": "enzo-boy",
+"name": "Enzo",
+"gender": "boy",
+"origin": "Italian",
+"meaning": "Ruler of his own house",
+"tag": "world"
+},
+{
+"id": "nilo-boy",
+"name": "Nilo",
+"gender": "boy",
+"origin": "Italian / Spanish (place)",
+"meaning": "The Nile",
+"tag": "world"
+},
+{
+"id": "dario-boy",
+"name": "Dario",
+"gender": "boy",
+"origin": "Italian / Persian",
+"meaning": "From Darius; one who holds firm",
+"tag": "world"
+},
+{
+"id": "arno-boy",
+"name": "Arno",
+"gender": "boy",
+"origin": "Italian (place)",
+"meaning": "The river through Florence",
+"tag": "world"
+},
+{
+"id": "tiber-boy",
+"name": "Tiber",
+"gender": "boy",
+"origin": "Latin (place)",
+"meaning": "The river through Rome",
+"tag": "world"
+},
+{
+"id": "remo-boy",
+"name": "Remo",
+"gender": "boy",
+"origin": "Italian / Latin",
+"meaning": "From Remus; also an oar",
+"tag": "world"
+},
+{
+"id": "marlo-boy",
+"name": "Marlo",
+"gender": "boy",
+"origin": "Italian / English",
+"meaning": "Of the hill beside the lake",
+"tag": "world"
+},
+{
+"id": "marin-boy",
+"name": "Marin",
+"gender": "boy",
+"origin": "Croatian / French",
+"meaning": "Of the sea",
+"tag": "world"
+},
+{
+"id": "lorin-boy",
+"name": "Lorin",
+"gender": "boy",
+"origin": "Latin",
+"meaning": "Crowned with laurel",
+"tag": "world"
+},
+{
+"id": "anton-boy",
+"name": "Anton",
+"gender": "boy",
+"origin": "Latin / Slavic",
+"meaning": "Priceless, beyond value",
+"tag": "world"
+},
+{
+"id": "linus-boy",
+"name": "Linus",
+"gender": "boy",
+"origin": "Greek",
+"meaning": "Flax; an early musician of myth",
+"tag": "world"
+},
+{
+"id": "theron-boy",
+"name": "Theron",
+"gender": "boy",
+"origin": "Greek",
+"meaning": "A hunter",
+"tag": "world"
+},
+{
+"id": "orion-boy",
+"name": "Orion",
+"gender": "boy",
+"origin": "Greek",
+"meaning": "The hunter; the constellation",
+"tag": "world"
+},
+{
+"id": "atlas-boy",
+"name": "Atlas",
+"gender": "boy",
+"origin": "Greek",
+"meaning": "The one who holds up the sky",
+"tag": "world"
+},
+{
+"id": "zephyr-boy",
+"name": "Zephyr",
+"gender": "boy",
+"origin": "Greek",
+"meaning": "The west wind",
+"tag": "world"
+},
+{
+"id": "niko-boy",
+"name": "Niko",
+"gender": "boy",
+"origin": "Greek / Finnish",
+"meaning": "Victory of the people",
+"tag": "world"
+},
+{
+"id": "cairo-boy",
+"name": "Cairo",
+"gender": "boy",
+"origin": "Egyptian (place)",
+"meaning": "The victorious city on the Nile",
+"tag": "world"
+},
+{
+"id": "lisan-boy",
+"name": "Lisan",
+"gender": "boy",
+"origin": "Portuguese (place) / Arabic",
+"meaning": "Clipped from Lisbon; in Arabic, language",
+"tag": "world"
+},
+{
+"id": "sevan-boy",
+"name": "Sevan",
+"gender": "boy",
+"origin": "Armenian (place)",
+"meaning": "The high lake of Armenia",
+"tag": "world"
+},
+{
+"id": "aram-boy",
+"name": "Aram",
+"gender": "boy",
+"origin": "Armenian",
+"meaning": "Of the highlands; an ancient king",
+"tag": "world"
+},
+{
+"id": "vahan-boy",
+"name": "Vahan",
+"gender": "boy",
+"origin": "Armenian",
+"meaning": "A shield",
+"tag": "world"
+},
+{
+"id": "narek-boy",
+"name": "Narek",
+"gender": "boy",
+"origin": "Armenian",
+"meaning": "After the poet of Narek",
+"tag": "world"
+},
+{
+"id": "levon-boy",
+"name": "Levon",
+"gender": "boy",
+"origin": "Armenian",
+"meaning": "Lion",
+"tag": "world"
+},
+{
+"id": "milos-boy",
+"name": "Milos",
+"gender": "boy",
+"origin": "Slavic",
+"meaning": "Gracious, dear",
+"tag": "world"
+},
+{
+"id": "zoran-boy",
+"name": "Zoran",
+"gender": "boy",
+"origin": "Slavic",
+"meaning": "Dawn, daybreak",
+"tag": "world"
+},
+{
+"id": "davor-boy",
+"name": "Davor",
+"gender": "boy",
+"origin": "Slavic",
+"meaning": "An old god of spring",
+"tag": "world"
+},
+{
+"id": "yaro-boy",
+"name": "Yaro",
+"gender": "boy",
+"origin": "Slavic / Hausa",
+"meaning": "Fierce; born in spring",
+"tag": "world"
+},
+{
+"id": "soren-boy",
+"name": "Soren",
+"gender": "boy",
+"origin": "Danish",
+"meaning": "Stern and steady",
+"tag": "world"
+},
+{
+"id": "leif-boy",
+"name": "Leif",
+"gender": "boy",
+"origin": "Norse",
+"meaning": "Heir, the one who follows",
+"tag": "world"
+},
+{
+"id": "sten-boy",
+"name": "Sten",
+"gender": "boy",
+"origin": "Nordic",
+"meaning": "Stone",
+"tag": "world"
+},
+{
+"id": "alvar-boy",
+"name": "Alvar",
+"gender": "boy",
+"origin": "Nordic / Spanish",
+"meaning": "Guardian; an elf warrior",
+"tag": "world"
+},
+{
+"id": "kai-boy",
+"name": "Kai",
+"gender": "boy",
+"origin": "Hawaiian / Nordic",
+"meaning": "The sea",
+"tag": "world"
+},
+{
+"id": "finn-boy",
+"name": "Finn",
+"gender": "boy",
+"origin": "Irish",
+"meaning": "Fair, bright",
+"tag": "world"
+},
+{
+"id": "ronan-boy",
+"name": "Ronan",
+"gender": "boy",
+"origin": "Irish",
+"meaning": "Little seal",
+"tag": "world"
+},
+{
+"id": "cael-boy",
+"name": "Cael",
+"gender": "boy",
+"origin": "Irish",
+"meaning": "Slender; of the sea",
+"tag": "world"
+},
+{
+"id": "lorcan-boy",
+"name": "Lorcan",
+"gender": "boy",
+"origin": "Irish",
+"meaning": "The little fierce one",
+"tag": "world"
+},
+{
+"id": "emrys-boy",
+"name": "Emrys",
+"gender": "boy",
+"origin": "Welsh",
+"meaning": "Immortal",
+"tag": "world"
+},
+{
+"id": "idris-boy",
+"name": "Idris",
+"gender": "boy",
+"origin": "Welsh / Arabic",
+"meaning": "Ardent lord; in Arabic, one who studies",
+"tag": "world"
+},
+{
+"id": "caspian-boy",
+"name": "Caspian",
+"gender": "boy",
+"origin": "English / Persian (place)",
+"meaning": "After the Caspian Sea",
+"tag": "world"
+},
+{
+"id": "oren-boy",
+"name": "Oren",
+"gender": "boy",
+"origin": "Hebrew",
+"meaning": "A pine tree",
+"tag": "world"
+},
+{
+"id": "noam-boy",
+"name": "Noam",
+"gender": "boy",
+"origin": "Hebrew",
+"meaning": "Pleasantness",
+"tag": "world"
+},
+{
+"id": "ari-boy",
+"name": "Ari",
+"gender": "boy",
+"origin": "Hebrew / Norse",
+"meaning": "Lion; in Norse, an eagle",
+"tag": "world"
+},
+{
+"id": "lior-boy",
+"name": "Lior",
+"gender": "boy",
+"origin": "Hebrew",
+"meaning": "My light",
+"tag": "world"
+},
+{
+"id": "cyrus-boy",
+"name": "Cyrus",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "The sun; the far sighted king",
+"tag": "world"
+},
+{
+"id": "darian-boy",
+"name": "Darian",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "Of Darius; one who holds goodness",
+"tag": "world"
+},
+{
+"id": "kaveh-boy",
+"name": "Kaveh",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "The blacksmith who raised the banner",
+"tag": "world"
+},
+{
+"id": "sohrab-boy",
+"name": "Sohrab",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "Shining; the hero of the Shahnameh",
+"tag": "world"
+},
+{
+"id": "rostam-boy",
+"name": "Rostam",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "The great champion of the Shahnameh",
+"tag": "world"
+},
+{
+"id": "behrad-boy",
+"name": "Behrad",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "Of noble descent",
+"tag": "world"
+},
+{
+"id": "arash-boy",
+"name": "Arash",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "The archer of the legend; bright",
+"tag": "world"
+},
+{
+"id": "parsa-boy",
+"name": "Parsa",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "Devout; of Persia",
+"tag": "world"
+},
+{
+"id": "navid-boy",
+"name": "Navid",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "Good news, glad tidings",
+"tag": "world"
+},
+{
+"id": "omid-boy",
+"name": "Omid",
+"gender": "boy",
+"origin": "Persian",
+"meaning": "Hope",
+"tag": "world"
+},
+{
+"id": "selim-boy",
+"name": "Selim",
+"gender": "boy",
+"origin": "Turkish / Arabic",
+"meaning": "Safe, unharmed, whole",
+"tag": "world"
+},
+{
+"id": "emir-boy",
+"name": "Emir",
+"gender": "boy",
+"origin": "Turkish / Arabic",
+"meaning": "A commander, a prince",
+"tag": "world"
+},
+{
+"id": "deniz-boy",
+"name": "Deniz",
+"gender": "boy",
+"origin": "Turkish",
+"meaning": "The sea",
+"tag": "world"
+},
+{
+"id": "kaan-boy",
+"name": "Kaan",
+"gender": "boy",
+"origin": "Turkish",
+"meaning": "Ruler, a khan",
+"tag": "world"
+},
+{
+"id": "ozan-boy",
+"name": "Ozan",
+"gender": "boy",
+"origin": "Turkish",
+"meaning": "A bard, a wandering singer",
+"tag": "world"
+},
+{
+"id": "tarik-boy",
+"name": "Tarik",
+"gender": "boy",
+"origin": "Turkish / Arabic",
+"meaning": "The morning star; one who knocks",
+"tag": "world"
+},
+{
+"id": "baran-boy",
+"name": "Baran",
+"gender": "boy",
+"origin": "Turkish / Kurdish",
+"meaning": "Rain",
+"tag": "world"
+},
+{
+"id": "hale-boy",
+"name": "Hale",
+"gender": "boy",
+"origin": "Turkish",
+"meaning": "The halo around the moon",
+"tag": "world"
+},
+{
+"id": "anwar-boy",
+"name": "Anwar",
+"gender": "boy",
+"origin": "Arabic / Swahili",
+"meaning": "Luminous, full of light",
+"tag": "world"
+},
+{
+"id": "jabari-boy",
+"name": "Jabari",
+"gender": "boy",
+"origin": "Swahili",
+"meaning": "Brave, without fear",
+"tag": "world"
+},
+{
+"id": "bakari-boy",
+"name": "Bakari",
+"gender": "boy",
+"origin": "Swahili",
+"meaning": "One who keeps a promise",
+"tag": "world"
+},
+{
+"id": "sefu-boy",
+"name": "Sefu",
+"gender": "boy",
+"origin": "Swahili",
+"meaning": "A sword",
+"tag": "world"
+},
+{
+"id": "jengo-boy",
+"name": "Jengo",
+"gender": "boy",
+"origin": "Swahili",
+"meaning": "A building; something made to last",
+"tag": "world"
+},
+{
+"id": "amani-boy",
+"name": "Amani",
+"gender": "boy",
+"origin": "Swahili / Arabic",
+"meaning": "Peace",
+"tag": "world"
+},
+{
+"id": "adisa-boy",
+"name": "Adisa",
+"gender": "boy",
+"origin": "Yoruba",
+"meaning": "One who makes things clear",
+"tag": "world"
+},
+{
+"id": "femi-boy",
+"name": "Femi",
+"gender": "boy",
+"origin": "Yoruba",
+"meaning": "Love me; short for Oluwafemi",
+"tag": "world"
+},
+{
+"id": "tayo-boy",
+"name": "Tayo",
+"gender": "boy",
+"origin": "Yoruba",
+"meaning": "Joy is enough",
+"tag": "world"
+},
+{
+"id": "ayo-boy",
+"name": "Ayo",
+"gender": "boy",
+"origin": "Yoruba",
+"meaning": "Joy",
+"tag": "world"
+},
+{
+"id": "kofi-boy",
+"name": "Kofi",
+"gender": "boy",
+"origin": "Akan",
+"meaning": "Born on a Friday",
+"tag": "world"
+},
+{
+"id": "kwame-boy",
+"name": "Kwame",
+"gender": "boy",
+"origin": "Akan",
+"meaning": "Born on a Saturday",
+"tag": "world"
+},
+{
+"id": "haru-boy",
+"name": "Haru",
+"gender": "boy",
+"origin": "Japanese",
+"meaning": "Spring; sunlight",
+"tag": "world"
+},
+{
+"id": "ren-boy",
+"name": "Ren",
+"gender": "boy",
+"origin": "Japanese",
+"meaning": "The lotus; also love",
+"tag": "world"
+},
+{
+"id": "riku-boy",
+"name": "Riku",
+"gender": "boy",
+"origin": "Japanese",
+"meaning": "Land, solid ground",
+"tag": "world"
+},
+{
+"id": "kaito-boy",
+"name": "Kaito",
+"gender": "boy",
+"origin": "Japanese",
+"meaning": "Ocean and soaring",
+"tag": "world"
+},
+{
+"id": "sora-boy",
+"name": "Sora",
+"gender": "boy",
+"origin": "Japanese",
+"meaning": "The sky",
+"tag": "world"
+},
+{
+"id": "itsuki-boy",
+"name": "Itsuki",
+"gender": "boy",
+"origin": "Japanese",
+"meaning": "A tree standing alone",
+"tag": "world"
+},
+{
+"id": "nao-boy",
+"name": "Nao",
+"gender": "boy",
+"origin": "Japanese",
+"meaning": "Honest, straight",
+"tag": "world"
+},
+{
+"id": "minho-boy",
+"name": "Minho",
+"gender": "boy",
+"origin": "Korean",
+"meaning": "Bright and brave",
+"tag": "world"
+},
+{
+"id": "tenzin-boy",
+"name": "Tenzin",
+"gender": "boy",
+"origin": "Tibetan",
+"meaning": "Holder of the teachings",
+"tag": "world"
+},
+{
+"id": "lobsang-boy",
+"name": "Lobsang",
+"gender": "boy",
+"origin": "Tibetan",
+"meaning": "Of good heart and clear mind",
+"tag": "world"
+},
+{
+"id": "bao-boy",
+"name": "Bao",
+"gender": "boy",
+"origin": "Vietnamese",
+"meaning": "Treasure; protection",
+"tag": "world"
+},
+{
+"id": "minh-boy",
+"name": "Minh",
+"gender": "boy",
+"origin": "Vietnamese",
+"meaning": "Bright, quick witted",
+"tag": "world"
+},
+{
+"id": "kiet-boy",
+"name": "Kiet",
+"gender": "boy",
+"origin": "Vietnamese",
+"meaning": "Outstanding",
+"tag": "world"
+},
+{
+"id": "lian-boy",
+"name": "Lian",
+"gender": "boy",
+"origin": "Chinese",
+"meaning": "The lotus",
+"tag": "world"
+},
+{
+"id": "jian-boy",
+"name": "Jian",
+"gender": "boy",
+"origin": "Chinese",
+"meaning": "Strong and well",
+"tag": "world"
+},
+{
+"id": "dalian-boy",
+"name": "Dalian",
+"gender": "boy",
+"origin": "Chinese (place)",
+"meaning": "The port city; also to reach",
+"tag": "world"
+},
+{
+"id": "ravel-boy",
+"name": "Ravel",
+"gender": "boy",
+"origin": "French",
+"meaning": "After the composer; also to unwind a thread",
+"tag": "world"
+},
+{
+"id": "solan-boy",
+"name": "Solan",
+"gender": "boy",
+"origin": "French / Breton",
+"meaning": "Of the sun; a sunlit clearing",
+"tag": "world"
+},
+{
+"id": "aleo-boy",
+"name": "Aleo",
+"gender": "boy",
+"origin": "Spanish / Latin",
+"meaning": "Of the breeze",
+"tag": "world"
+},
+{
+"id": "teo-boy",
+"name": "Teo",
+"gender": "boy",
+"origin": "Spanish / Greek",
+"meaning": "Gift of the divine",
+"tag": "world"
+},
+{
+"id": "rafa-boy",
+"name": "Rafa",
+"gender": "boy",
+"origin": "Spanish",
+"meaning": "Short for Rafael; one who heals",
+"tag": "world"
+},
+{
+"id": "mateo-boy",
+"name": "Mateo",
+"gender": "boy",
+"origin": "Spanish",
+"meaning": "A gift",
+"tag": "world"
+},
+{
+"id": "bruno-boy",
+"name": "Bruno",
+"gender": "boy",
+"origin": "Italian / German",
+"meaning": "Brown; of the earth",
+"tag": "world"
+},
+{
+"id": "otto-boy",
+"name": "Otto",
+"gender": "boy",
+"origin": "German / Nordic",
+"meaning": "Wealth, prosperity",
+"tag": "world"
+},
+{
+"id": "siena-girl",
+"name": "Siena",
+"gender": "girl",
+"origin": "Italian (place)",
+"meaning": "The hill city; also a warm earth red",
+"tag": "world"
+},
+{
+"id": "verona-girl",
+"name": "Verona",
+"gender": "girl",
+"origin": "Italian (place)",
+"meaning": "The city on the Adige",
+"tag": "world"
+},
+{
+"id": "capri-girl",
+"name": "Capri",
+"gender": "girl",
+"origin": "Italian (place)",
+"meaning": "The island in the bay of Naples",
+"tag": "world"
+},
+{
+"id": "lucca-girl",
+"name": "Lucca",
+"gender": "girl",
+"origin": "Italian (place)",
+"meaning": "The walled Tuscan town",
+"tag": "world"
+},
+{
+"id": "riva-girl",
+"name": "Riva",
+"gender": "girl",
+"origin": "Italian / Hebrew",
+"meaning": "A shore, a riverbank",
+"tag": "world"
+},
+{
+"id": "alba-girl",
+"name": "Alba",
+"gender": "girl",
+"origin": "Italian / Latin",
+"meaning": "Dawn, the first light",
+"tag": "world"
+},
+{
+"id": "luna-girl",
+"name": "Luna",
+"gender": "girl",
+"origin": "Latin / Spanish",
+"meaning": "The moon",
+"tag": "world"
+},
+{
+"id": "lira-girl",
+"name": "Lira",
+"gender": "girl",
+"origin": "Italian / Greek",
+"meaning": "The lyre",
+"tag": "world"
+},
+{
+"id": "vienne-girl",
+"name": "Vienne",
+"gender": "girl",
+"origin": "French (place)",
+"meaning": "The town on the Rhone; the French Vienna",
+"tag": "world"
+},
+{
+"id": "ondine-girl",
+"name": "Ondine",
+"gender": "girl",
+"origin": "French",
+"meaning": "A spirit of the water",
+"tag": "world"
+},
+{
+"id": "solene-girl",
+"name": "Solene",
+"gender": "girl",
+"origin": "French",
+"meaning": "Solemn, composed",
+"tag": "world"
+},
+{
+"id": "esme-girl",
+"name": "Esme",
+"gender": "girl",
+"origin": "French",
+"meaning": "Esteemed, loved",
+"tag": "world"
+},
+{
+"id": "paloma-girl",
+"name": "Paloma",
+"gender": "girl",
+"origin": "Spanish",
+"meaning": "A dove",
+"tag": "world"
+},
+{
+"id": "vega-girl",
+"name": "Vega",
+"gender": "girl",
+"origin": "Spanish / Arabic",
+"meaning": "The falling star; also a meadow",
+"tag": "world"
+},
+{
+"id": "ines-girl",
+"name": "Ines",
+"gender": "girl",
+"origin": "Spanish / Portuguese",
+"meaning": "Pure",
+"tag": "world"
+},
+{
+"id": "lucia-girl",
+"name": "Lucia",
+"gender": "girl",
+"origin": "Latin / Italian",
+"meaning": "Light",
+"tag": "world"
+},
+{
+"id": "elara-girl",
+"name": "Elara",
+"gender": "girl",
+"origin": "Greek",
+"meaning": "A moon of Jupiter; a figure of myth",
+"tag": "world"
+},
+{
+"id": "thalia-girl",
+"name": "Thalia",
+"gender": "girl",
+"origin": "Greek",
+"meaning": "Blooming, in flower",
+"tag": "world"
+},
+{
+"id": "calla-girl",
+"name": "Calla",
+"gender": "girl",
+"origin": "Greek",
+"meaning": "Beautiful; also the lily",
+"tag": "world"
+},
+{
+"id": "nerissa-girl",
+"name": "Nerissa",
+"gender": "girl",
+"origin": "Greek",
+"meaning": "Of the sea",
+"tag": "world"
+},
+{
+"id": "selene-girl",
+"name": "Selene",
+"gender": "girl",
+"origin": "Greek",
+"meaning": "The moon",
+"tag": "world"
+},
+{
+"id": "danae-girl",
+"name": "Danae",
+"gender": "girl",
+"origin": "Greek",
+"meaning": "A figure of myth; mother of Perseus",
+"tag": "world"
+},
+{
+"id": "cora-girl",
+"name": "Cora",
+"gender": "girl",
+"origin": "Greek",
+"meaning": "A maiden; also the heart",
+"tag": "world"
+},
+{
+"id": "ileana-girl",
+"name": "Ileana",
+"gender": "girl",
+"origin": "Romanian / Greek",
+"meaning": "Bright, of the light",
+"tag": "world"
+},
+{
+"id": "lumi-girl",
+"name": "Lumi",
+"gender": "girl",
+"origin": "Finnish",
+"meaning": "Snow",
+"tag": "world"
+},
+{
+"id": "aino-girl",
+"name": "Aino",
+"gender": "girl",
+"origin": "Finnish",
+"meaning": "The only one",
+"tag": "world"
+},
+{
+"id": "vilja-girl",
+"name": "Vilja",
+"gender": "girl",
+"origin": "Finnish",
+"meaning": "Will, intention",
+"tag": "world"
+},
+{
+"id": "saana-girl",
+"name": "Saana",
+"gender": "girl",
+"origin": "Finnish (place)",
+"meaning": "The fell that stands over Lapland",
+"tag": "world"
+},
+{
+"id": "inari-girl",
+"name": "Inari",
+"gender": "girl",
+"origin": "Finnish (place)",
+"meaning": "The great lake of Lapland",
+"tag": "world"
+},
+{
+"id": "elva-girl",
+"name": "Elva",
+"gender": "girl",
+"origin": "Nordic / Irish",
+"meaning": "An elf; in Norse, a river",
+"tag": "world"
+},
+{
+"id": "freya-girl",
+"name": "Freya",
+"gender": "girl",
+"origin": "Norse",
+"meaning": "The goddess of love and spring",
+"tag": "world"
+},
+{
+"id": "signe-girl",
+"name": "Signe",
+"gender": "girl",
+"origin": "Nordic",
+"meaning": "A new victory",
+"tag": "world"
+},
+{
+"id": "liv-girl",
+"name": "Liv",
+"gender": "girl",
+"origin": "Norse",
+"meaning": "Life",
+"tag": "world"
+},
+{
+"id": "runa-girl",
+"name": "Runa",
+"gender": "girl",
+"origin": "Norse",
+"meaning": "A secret; a rune",
+"tag": "world"
+},
+{
+"id": "neva-girl",
+"name": "Neva",
+"gender": "girl",
+"origin": "Russian (place)",
+"meaning": "The river through St Petersburg",
+"tag": "world"
+},
+{
+"id": "mila-girl",
+"name": "Mila",
+"gender": "girl",
+"origin": "Slavic",
+"meaning": "Gracious, dear",
+"tag": "world"
+},
+{
+"id": "vesna-girl",
+"name": "Vesna",
+"gender": "girl",
+"origin": "Slavic",
+"meaning": "Spring",
+"tag": "world"
+},
+{
+"id": "zora-girl",
+"name": "Zora",
+"gender": "girl",
+"origin": "Slavic",
+"meaning": "Dawn",
+"tag": "world"
+},
+{
+"id": "lada-girl",
+"name": "Lada",
+"gender": "girl",
+"origin": "Slavic",
+"meaning": "The old goddess of beauty and order",
+"tag": "world"
+},
+{
+"id": "dunja-girl",
+"name": "Dunja",
+"gender": "girl",
+"origin": "Slavic",
+"meaning": "The quince",
+"tag": "world"
+},
+{
+"id": "saskia-girl",
+"name": "Saskia",
+"gender": "girl",
+"origin": "Dutch",
+"meaning": "A Saxon woman; strong",
+"tag": "world"
+},
+{
+"id": "anoush-girl",
+"name": "Anoush",
+"gender": "girl",
+"origin": "Armenian",
+"meaning": "Sweet, everlasting",
+"tag": "world"
+},
+{
+"id": "lusine-girl",
+"name": "Lusine",
+"gender": "girl",
+"origin": "Armenian",
+"meaning": "The moon",
+"tag": "world"
+},
+{
+"id": "nairi-girl",
+"name": "Nairi",
+"gender": "girl",
+"origin": "Armenian (place)",
+"meaning": "The ancient land of rivers",
+"tag": "world"
+},
+{
+"id": "siran-girl",
+"name": "Siran",
+"gender": "girl",
+"origin": "Armenian",
+"meaning": "Lovely",
+"tag": "world"
+},
+{
+"id": "talia-girl",
+"name": "Talia",
+"gender": "girl",
+"origin": "Hebrew",
+"meaning": "Dew from heaven",
+"tag": "world"
+},
+{
+"id": "shira-girl",
+"name": "Shira",
+"gender": "girl",
+"origin": "Hebrew",
+"meaning": "A song",
+"tag": "world"
+},
+{
+"id": "yael-girl",
+"name": "Yael",
+"gender": "girl",
+"origin": "Hebrew",
+"meaning": "One who ascends",
+"tag": "world"
+},
+{
+"id": "ayala-girl",
+"name": "Ayala",
+"gender": "girl",
+"origin": "Hebrew",
+"meaning": "A doe",
+"tag": "world"
+},
+{
+"id": "noa-girl",
+"name": "Noa",
+"gender": "girl",
+"origin": "Hebrew",
+"meaning": "Motion, movement",
+"tag": "world"
+},
+{
+"id": "mahsa-girl",
+"name": "Mahsa",
+"gender": "girl",
+"origin": "Persian",
+"meaning": "Like the moon",
+"tag": "world"
+},
+{
+"id": "shirin-girl",
+"name": "Shirin",
+"gender": "girl",
+"origin": "Persian",
+"meaning": "Sweet; the beloved of the epic",
+"tag": "world"
+},
+{
+"id": "roya-girl",
+"name": "Roya",
+"gender": "girl",
+"origin": "Persian",
+"meaning": "A dream, a vision",
+"tag": "world"
+},
+{
+"id": "nilou-girl",
+"name": "Nilou",
+"gender": "girl",
+"origin": "Persian",
+"meaning": "Short for Niloufar, the water lily",
+"tag": "world"
+},
+{
+"id": "yalda-girl",
+"name": "Yalda",
+"gender": "girl",
+"origin": "Persian",
+"meaning": "The longest night of the year",
+"tag": "world"
+},
+{
+"id": "darya-girl",
+"name": "Darya",
+"gender": "girl",
+"origin": "Persian",
+"meaning": "The sea",
+"tag": "world"
+},
+{
+"id": "parisa-girl",
+"name": "Parisa",
+"gender": "girl",
+"origin": "Persian",
+"meaning": "Like a fairy",
+"tag": "world"
+},
+{
+"id": "suri-girl",
+"name": "Suri",
+"gender": "girl",
+"origin": "Persian",
+"meaning": "A red rose",
+"tag": "world"
+},
+{
+"id": "elif-girl",
+"name": "Elif",
+"gender": "girl",
+"origin": "Turkish",
+"meaning": "The first letter; slender and upright",
+"tag": "world"
+},
+{
+"id": "ece-girl",
+"name": "Ece",
+"gender": "girl",
+"origin": "Turkish",
+"meaning": "Queen",
+"tag": "world"
+},
+{
+"id": "ada-girl",
+"name": "Ada",
+"gender": "girl",
+"origin": "Turkish / Nordic",
+"meaning": "An island; also noble",
+"tag": "world"
+},
+{
+"id": "lale-girl",
+"name": "Lale",
+"gender": "girl",
+"origin": "Turkish",
+"meaning": "The tulip",
+"tag": "world"
+},
+{
+"id": "aylin-girl",
+"name": "Aylin",
+"gender": "girl",
+"origin": "Turkish",
+"meaning": "A halo around the moon",
+"tag": "world"
+},
+{
+"id": "nehir-girl",
+"name": "Nehir",
+"gender": "girl",
+"origin": "Turkish",
+"meaning": "A river",
+"tag": "world"
+},
+{
+"id": "sena-girl",
+"name": "Sena",
+"gender": "girl",
+"origin": "Turkish / Japanese",
+"meaning": "A blessing offered to you",
+"tag": "world"
+},
+{
+"id": "lina-girl",
+"name": "Lina",
+"gender": "girl",
+"origin": "Arabic / Italian",
+"meaning": "A tender palm; also light",
+"tag": "world"
+},
+{
+"id": "rania-girl",
+"name": "Rania",
+"gender": "girl",
+"origin": "Arabic",
+"meaning": "One who gazes, who contemplates",
+"tag": "world"
+},
+{
+"id": "dima-girl",
+"name": "Dima",
+"gender": "girl",
+"origin": "Arabic",
+"meaning": "A steady gentle rain",
+"tag": "world"
+},
+{
+"id": "salma-girl",
+"name": "Salma",
+"gender": "girl",
+"origin": "Arabic",
+"meaning": "Safe, at peace",
+"tag": "world"
+},
+{
+"id": "yara-girl",
+"name": "Yara",
+"gender": "girl",
+"origin": "Arabic / Tupi",
+"meaning": "A small butterfly; lady of the waters",
+"tag": "world"
+},
+{
+"id": "samara-girl",
+"name": "Samara",
+"gender": "girl",
+"origin": "Arabic / Hebrew",
+"meaning": "Guarded; also the winged seed of a maple",
+"tag": "world"
+},
+{
+"id": "nawal-girl",
+"name": "Nawal",
+"gender": "girl",
+"origin": "Arabic",
+"meaning": "A gift",
+"tag": "world"
+},
+{
+"id": "sahar-girl",
+"name": "Sahar",
+"gender": "girl",
+"origin": "Arabic / Persian",
+"meaning": "Dawn",
+"tag": "world"
+},
+{
+"id": "layan-girl",
+"name": "Layan",
+"gender": "girl",
+"origin": "Arabic",
+"meaning": "Softness, gentleness",
+"tag": "world"
+},
+{
+"id": "sanaa-girl",
+"name": "Sanaa",
+"gender": "girl",
+"origin": "Arabic (place)",
+"meaning": "A work of art; the old city in Yemen",
+"tag": "world"
+},
+{
+"id": "hira-girl",
+"name": "Hira",
+"gender": "girl",
+"origin": "Arabic / Japanese",
+"meaning": "A diamond",
+"tag": "world"
+},
+{
+"id": "imani-girl",
+"name": "Imani",
+"gender": "girl",
+"origin": "Swahili",
+"meaning": "Faith",
+"tag": "world"
+},
+{
+"id": "zuri-girl",
+"name": "Zuri",
+"gender": "girl",
+"origin": "Swahili",
+"meaning": "Beautiful",
+"tag": "world"
+},
+{
+"id": "asali-girl",
+"name": "Asali",
+"gender": "girl",
+"origin": "Swahili",
+"meaning": "Honey",
+"tag": "world"
+},
+{
+"id": "dalila-girl",
+"name": "Dalila",
+"gender": "girl",
+"origin": "Swahili",
+"meaning": "Gentle",
+"tag": "world"
+},
+{
+"id": "nala-girl",
+"name": "Nala",
+"gender": "girl",
+"origin": "Swahili / Arabic",
+"meaning": "A gift; one who achieves",
+"tag": "world"
+},
+{
+"id": "lulu-girl",
+"name": "Lulu",
+"gender": "girl",
+"origin": "Swahili / Arabic",
+"meaning": "A pearl",
+"tag": "world"
+},
+{
+"id": "ayana-girl",
+"name": "Ayana",
+"gender": "girl",
+"origin": "Ethiopian / Swahili",
+"meaning": "A beautiful flower; a bright one",
+"tag": "world"
+},
+{
+"id": "thandi-girl",
+"name": "Thandi",
+"gender": "girl",
+"origin": "Zulu / Xhosa",
+"meaning": "The loving one",
+"tag": "world"
+},
+{
+"id": "zola-girl",
+"name": "Zola",
+"gender": "girl",
+"origin": "Zulu / Italian",
+"meaning": "Calm, still",
+"tag": "world"
+},
+{
+"id": "ife-girl",
+"name": "Ife",
+"gender": "girl",
+"origin": "Yoruba",
+"meaning": "Love",
+"tag": "world"
+},
+{
+"id": "simi-girl",
+"name": "Simi",
+"gender": "girl",
+"origin": "Yoruba",
+"meaning": "Rest, be at ease",
+"tag": "world"
+},
+{
+"id": "ebele-girl",
+"name": "Ebele",
+"gender": "girl",
+"origin": "Igbo",
+"meaning": "Kindness, mercy",
+"tag": "world"
+},
+{
+"id": "mina-girl",
+"name": "Mina",
+"gender": "girl",
+"origin": "Japanese / Persian",
+"meaning": "Beautiful; in Persian, blue glass",
+"tag": "world"
+},
+{
+"id": "hana-girl",
+"name": "Hana",
+"gender": "girl",
+"origin": "Japanese / Arabic",
+"meaning": "A flower; in Arabic, happiness",
+"tag": "world"
+},
+{
+"id": "sumi-girl",
+"name": "Sumi",
+"gender": "girl",
+"origin": "Japanese",
+"meaning": "Clear, unclouded",
+"tag": "world"
+},
+{
+"id": "rin-girl",
+"name": "Rin",
+"gender": "girl",
+"origin": "Japanese",
+"meaning": "Dignified, cool and clear",
+"tag": "world"
+},
+{
+"id": "aya-girl",
+"name": "Aya",
+"gender": "girl",
+"origin": "Japanese / Arabic",
+"meaning": "Colour and design; in Arabic, a sign",
+"tag": "world"
+},
+{
+"id": "yuna-girl",
+"name": "Yuna",
+"gender": "girl",
+"origin": "Japanese / Korean",
+"meaning": "Gentle; also the night",
+"tag": "world"
+},
+{
+"id": "lien-girl",
+"name": "Lien",
+"gender": "girl",
+"origin": "Vietnamese / Chinese",
+"meaning": "The lotus",
+"tag": "world"
+},
+{
+"id": "mai-girl",
+"name": "Mai",
+"gender": "girl",
+"origin": "Vietnamese / Japanese",
+"meaning": "The apricot blossom; brightness",
+"tag": "world"
+},
+{
+"id": "linh-girl",
+"name": "Linh",
+"gender": "girl",
+"origin": "Vietnamese",
+"meaning": "Spirit, soul",
+"tag": "world"
+},
+{
+"id": "enya-girl",
+"name": "Enya",
+"gender": "girl",
+"origin": "Irish",
+"meaning": "A little fire; the kernel of a nut",
+"tag": "world"
+},
+{
+"id": "maeve-girl",
+"name": "Maeve",
+"gender": "girl",
+"origin": "Irish",
+"meaning": "A warrior queen; she who enchants",
+"tag": "world"
+},
+{
+"id": "isla-girl",
+"name": "Isla",
+"gender": "girl",
+"origin": "Scottish (place)",
+"meaning": "After the river Isla",
+"tag": "world"
+},
+{
+"id": "achu-boy",
+"name": "Achu",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A fond short form that stands on its own",
+"tag": "kerala"
+},
+{
+"id": "appu-boy",
+"name": "Appu",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "An affectionate name for a small boy",
+"tag": "kerala"
+},
+{
+"id": "kichu-boy",
+"name": "Kichu",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A pet name that became a name",
+"tag": "kerala"
+},
+{
+"id": "chandu-boy",
+"name": "Chandu",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A fond form; the moon",
+"tag": "kerala"
+},
+{
+"id": "nandu-boy",
+"name": "Nandu",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A fond form of Nandan; one who brings joy",
+"tag": "kerala"
+},
+{
+"id": "deepu-boy",
+"name": "Deepu",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A fond form of Deepak; a little lamp",
+"tag": "kerala"
+},
+{
+"id": "anandhu-boy",
+"name": "Anandhu",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A fond form of Anand; joy itself",
+"tag": "kerala"
+},
+{
+"id": "manu-boy",
+"name": "Manu",
+"gender": "boy",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The first man; the thoughtful one",
+"tag": "kerala"
+},
+{
+"id": "hari-boy",
+"name": "Hari",
+"gender": "boy",
+"origin": "Malayalam / Sanskrit",
+"meaning": "One who takes sorrow away",
+"tag": "kerala"
+},
+{
+"id": "sree-boy",
+"name": "Sree",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Auspicious; radiance, used on its own in Kerala",
+"tag": "kerala"
+},
+{
+"id": "kannan-boy",
+"name": "Kannan",
+"gender": "boy",
+"origin": "Malayalam / Tamil",
+"meaning": "Krishna; the beloved one",
+"tag": "kerala"
+},
+{
+"id": "gokul-boy",
+"name": "Gokul",
+"gender": "boy",
+"origin": "Malayalam (place)",
+"meaning": "The village of Krishna's childhood",
+"tag": "kerala"
+},
+{
+"id": "vineeth-boy",
+"name": "Vineeth",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Modest, well mannered",
+"tag": "kerala"
+},
+{
+"id": "nithin-boy",
+"name": "Nithin",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "One who keeps to the right path",
+"tag": "kerala"
+},
+{
+"id": "jithin-boy",
+"name": "Jithin",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Victorious",
+"tag": "kerala"
+},
+{
+"id": "sujith-boy",
+"name": "Sujith",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Well conquered",
+"tag": "kerala"
+},
+{
+"id": "prajith-boy",
+"name": "Prajith",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Born of wisdom",
+"tag": "kerala"
+},
+{
+"id": "rejith-boy",
+"name": "Rejith",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A modern Kerala name",
+"tag": "kerala"
+},
+{
+"id": "renjith-boy",
+"name": "Renjith",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Delighted, pleasing",
+"tag": "kerala"
+},
+{
+"id": "sreejith-boy",
+"name": "Sreejith",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Victorious with grace",
+"tag": "kerala"
+},
+{
+"id": "bineesh-boy",
+"name": "Bineesh",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A modern Kerala name",
+"tag": "kerala"
+},
+{
+"id": "ajeesh-boy",
+"name": "Ajeesh",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Unconquered",
+"tag": "kerala"
+},
+{
+"id": "niranj-boy",
+"name": "Niranj",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Short for Niranjan; spotless, pure",
+"tag": "kerala"
+},
+{
+"id": "akhil-boy",
+"name": "Akhil",
+"gender": "boy",
+"origin": "Malayalam / Sanskrit",
+"meaning": "Complete, entire",
+"tag": "kerala"
+},
+{
+"id": "anoop-boy",
+"name": "Anoop",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Without compare",
+"tag": "kerala"
+},
+{
+"id": "vimal-boy",
+"name": "Vimal",
+"gender": "boy",
+"origin": "Malayalam / Sanskrit",
+"meaning": "Pure, unclouded",
+"tag": "kerala"
+},
+{
+"id": "dileep-boy",
+"name": "Dileep",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "A king of the solar line; a protector",
+"tag": "kerala"
+},
+{
+"id": "midhun-boy",
+"name": "Midhun",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "The Gemini month; the twins",
+"tag": "kerala"
+},
+{
+"id": "vaisakh-boy",
+"name": "Vaisakh",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "The month of late spring",
+"tag": "kerala"
+},
+{
+"id": "sarath-boy",
+"name": "Sarath",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Autumn",
+"tag": "kerala"
+},
+{
+"id": "adith-boy",
+"name": "Adith",
+"gender": "boy",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The sun",
+"tag": "kerala"
+},
+{
+"id": "thejus-boy",
+"name": "Thejus",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "Radiance, a sharp brightness",
+"tag": "kerala"
+},
+{
+"id": "kiran-boy",
+"name": "Kiran",
+"gender": "boy",
+"origin": "Malayalam / Sanskrit",
+"meaning": "A ray of light",
+"tag": "kerala"
+},
+{
+"id": "vedh-boy",
+"name": "Vedh",
+"gender": "boy",
+"origin": "Malayalam / Sanskrit",
+"meaning": "Knowledge",
+"tag": "kerala"
+},
+{
+"id": "nihal-boy",
+"name": "Nihal",
+"gender": "boy",
+"origin": "Malayalam / Persian",
+"meaning": "Content; also a young sapling",
+"tag": "kerala"
+},
+{
+"id": "amal-boy",
+"name": "Amal",
+"gender": "boy",
+"origin": "Malayalam / Arabic",
+"meaning": "Pure; in Arabic, hope",
+"tag": "kerala"
+},
+{
+"id": "ameen-boy",
+"name": "Ameen",
+"gender": "boy",
+"origin": "Malayalam (Mappila) / Arabic",
+"meaning": "Trustworthy",
+"tag": "kerala"
+},
+{
+"id": "shahal-boy",
+"name": "Shahal",
+"gender": "boy",
+"origin": "Malayalam (Mappila)",
+"meaning": "Bright and sure of himself",
+"tag": "kerala"
+},
+{
+"id": "rinshad-boy",
+"name": "Rinshad",
+"gender": "boy",
+"origin": "Malayalam (Mappila)",
+"meaning": "Rightly guided",
+"tag": "kerala"
+},
+{
+"id": "fayiz-boy",
+"name": "Fayiz",
+"gender": "boy",
+"origin": "Malayalam (Mappila) / Arabic",
+"meaning": "Victorious",
+"tag": "kerala"
+},
+{
+"id": "aaromal-boy",
+"name": "Aaromal",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "The beloved one, from the ballads of north Malabar",
+"tag": "kerala"
+},
+{
+"id": "kera-boy",
+"name": "Kera",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "The coconut palm, the root of Kerala's own name",
+"tag": "kerala"
+},
+{
+"id": "periyan-boy",
+"name": "Periyan",
+"gender": "boy",
+"origin": "Malayalam",
+"meaning": "The great one; from the Periyar",
+"tag": "kerala"
+},
+{
+"id": "neythal-boy",
+"name": "Neythal",
+"gender": "boy",
+"origin": "Malayalam / Tamil",
+"meaning": "The seashore country of the old poems",
+"tag": "kerala"
+},
+{
+"id": "bibin-boy",
+"name": "Bibin",
+"gender": "boy",
+"origin": "Malayalam (Christian Kerala)",
+"meaning": "A Kerala form of Vivian",
+"tag": "kerala"
+},
+{
+"id": "jobin-boy",
+"name": "Jobin",
+"gender": "boy",
+"origin": "Malayalam (Christian Kerala)",
+"meaning": "A Kerala form of Job",
+"tag": "kerala"
+},
+{
+"id": "jestin-boy",
+"name": "Jestin",
+"gender": "boy",
+"origin": "Malayalam (Christian Kerala)",
+"meaning": "A Kerala form of Justin",
+"tag": "kerala"
+},
+{
+"id": "rijo-boy",
+"name": "Rijo",
+"gender": "boy",
+"origin": "Malayalam (Christian Kerala)",
+"meaning": "A modern Kerala coinage",
+"tag": "kerala"
+},
+{
+"id": "ebin-boy",
+"name": "Ebin",
+"gender": "boy",
+"origin": "Malayalam (Christian Kerala)",
+"meaning": "A Kerala form of Eben",
+"tag": "kerala"
+},
+{
+"id": "alen-boy",
+"name": "Alen",
+"gender": "boy",
+"origin": "Malayalam (Christian Kerala)",
+"meaning": "The Kerala spelling of Allen",
+"tag": "kerala"
+},
+{
+"id": "anju-girl",
+"name": "Anju",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Blessing; a warm, everyday Kerala name",
+"tag": "kerala"
+},
+{
+"id": "ammu-girl",
+"name": "Ammu",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "An affectionate name for a little girl",
+"tag": "kerala"
+},
+{
+"id": "nimmy-girl",
+"name": "Nimmy",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "A fond Kerala name",
+"tag": "kerala"
+},
+{
+"id": "sona-girl",
+"name": "Sona",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Gold; said with affection",
+"tag": "kerala"
+},
+{
+"id": "ponnu-girl",
+"name": "Ponnu",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Gold; a term of endearment",
+"tag": "kerala"
+},
+{
+"id": "manju-girl",
+"name": "Manju",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Snow; also sweet and pleasing",
+"tag": "kerala"
+},
+{
+"id": "mazha-girl",
+"name": "Mazha",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Rain",
+"tag": "kerala"
+},
+{
+"id": "amrutha-girl",
+"name": "Amrutha",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Nectar; that which does not die",
+"tag": "kerala"
+},
+{
+"id": "athira-girl",
+"name": "Athira",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "The Thiruvathira star; Arcturus",
+"tag": "kerala"
+},
+{
+"id": "swathi-girl",
+"name": "Swathi",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "The star whose raindrop becomes a pearl",
+"tag": "kerala"
+},
+{
+"id": "rohini-girl",
+"name": "Rohini",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The brightest star in Taurus",
+"tag": "kerala"
+},
+{
+"id": "uthara-girl",
+"name": "Uthara",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "The northern star; a princess of the epic",
+"tag": "kerala"
+},
+{
+"id": "chithra-girl",
+"name": "Chithra",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "A painting; also a star",
+"tag": "kerala"
+},
+{
+"id": "poornima-girl",
+"name": "Poornima",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "The full moon",
+"tag": "kerala"
+},
+{
+"id": "indu-girl",
+"name": "Indu",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The moon",
+"tag": "kerala"
+},
+{
+"id": "resmi-girl",
+"name": "Resmi",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "A moonbeam",
+"tag": "kerala"
+},
+{
+"id": "sandhya-girl",
+"name": "Sandhya",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Dusk; the evening hour of prayer",
+"tag": "kerala"
+},
+{
+"id": "rajani-girl",
+"name": "Rajani",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The night",
+"tag": "kerala"
+},
+{
+"id": "nisha-girl",
+"name": "Nisha",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The night",
+"tag": "kerala"
+},
+{
+"id": "deepa-girl",
+"name": "Deepa",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "A lamp",
+"tag": "kerala"
+},
+{
+"id": "divya-girl",
+"name": "Divya",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "Divine",
+"tag": "kerala"
+},
+{
+"id": "gayathri-girl",
+"name": "Gayathri",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "A sacred metre and the hymn set to it",
+"tag": "kerala"
+},
+{
+"id": "gopika-girl",
+"name": "Gopika",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "A cowherd girl of Vrindavan",
+"tag": "kerala"
+},
+{
+"id": "anjana-girl",
+"name": "Anjana",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Kohl for the eyes",
+"tag": "kerala"
+},
+{
+"id": "malavika-girl",
+"name": "Malavika",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "A girl of the Malaya hills",
+"tag": "kerala"
+},
+{
+"id": "meenakshi-girl",
+"name": "Meenakshi",
+"gender": "girl",
+"origin": "Malayalam / Tamil",
+"meaning": "Fish eyed; the goddess of Madurai",
+"tag": "kerala"
+},
+{
+"id": "meera-girl",
+"name": "Meera",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The poet saint; also the ocean",
+"tag": "kerala"
+},
+{
+"id": "remya-girl",
+"name": "Remya",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Pleasing, delightful",
+"tag": "kerala"
+},
+{
+"id": "smitha-girl",
+"name": "Smitha",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Smiling",
+"tag": "kerala"
+},
+{
+"id": "soumya-girl",
+"name": "Soumya",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Gentle, even tempered",
+"tag": "kerala"
+},
+{
+"id": "keerthi-girl",
+"name": "Keerthi",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Fame, good name",
+"tag": "kerala"
+},
+{
+"id": "lekha-girl",
+"name": "Lekha",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "A line; a piece of writing",
+"tag": "kerala"
+},
+{
+"id": "mridula-girl",
+"name": "Mridula",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "Soft, tender",
+"tag": "kerala"
+},
+{
+"id": "niranjana-girl",
+"name": "Niranjana",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Spotless, without a mark",
+"tag": "kerala"
+},
+{
+"id": "padma-girl",
+"name": "Padma",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The lotus",
+"tag": "kerala"
+},
+{
+"id": "reshma-girl",
+"name": "Reshma",
+"gender": "girl",
+"origin": "Malayalam / Persian",
+"meaning": "Silken",
+"tag": "kerala"
+},
+{
+"id": "shilpa-girl",
+"name": "Shilpa",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "A work of craft",
+"tag": "kerala"
+},
+{
+"id": "sreeja-girl",
+"name": "Sreeja",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Born of Lakshmi; auspicious",
+"tag": "kerala"
+},
+{
+"id": "suchi-girl",
+"name": "Suchi",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Pure",
+"tag": "kerala"
+},
+{
+"id": "thanuja-girl",
+"name": "Thanuja",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Daughter",
+"tag": "kerala"
+},
+{
+"id": "varada-girl",
+"name": "Varada",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "One who grants a wish",
+"tag": "kerala"
+},
+{
+"id": "vidya-girl",
+"name": "Vidya",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "Knowledge",
+"tag": "kerala"
+},
+{
+"id": "veena-girl",
+"name": "Veena",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The stringed instrument",
+"tag": "kerala"
+},
+{
+"id": "vineetha-girl",
+"name": "Vineetha",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Modest, well mannered",
+"tag": "kerala"
+},
+{
+"id": "bhagya-girl",
+"name": "Bhagya",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Fortune, what is meant to be",
+"tag": "kerala"
+},
+{
+"id": "lathika-girl",
+"name": "Lathika",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "A creeper, a climbing vine",
+"tag": "kerala"
+},
+{
+"id": "nanditha-girl",
+"name": "Nanditha",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "Joyful",
+"tag": "kerala"
+},
+{
+"id": "shyama-girl",
+"name": "Shyama",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "Dark and lovely; the colour of rain cloud",
+"tag": "kerala"
+},
+{
+"id": "anamika-girl",
+"name": "Anamika",
+"gender": "girl",
+"origin": "Malayalam / Sanskrit",
+"meaning": "The nameless one; the ring finger",
+"tag": "kerala"
+},
+{
+"id": "krishnendu-girl",
+"name": "Krishnendu",
+"gender": "girl",
+"origin": "Malayalam",
+"meaning": "The dark moon",
+"tag": "kerala"
 }
 ];
