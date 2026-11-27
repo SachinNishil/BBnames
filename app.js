@@ -15,7 +15,6 @@
     comments: [],
     shuffle: false,
     seed: 1,
-    hidePassed: false,
     theme: 'auto'
   };
 
@@ -37,7 +36,18 @@
       return s;
     } catch (e) { return JSON.parse(JSON.stringify(defaults)); }
   }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function save() {
+    clearTimeout(save._t); save._t = null;
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  // Swipes land in memory at once and hit storage a moment later, so a fast
+  // run of them never blocks on serialising the whole state each time.
+  function saveSoon() {
+    if (save._t) return;
+    save._t = setTimeout(save, 400);
+  }
+  window.addEventListener('pagehide', save);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) save(); });
 
   function allNames() { return (window.NAMES || []).concat(state.custom); }
   function other(id) { return id === 'p1' ? 'p2' : 'p1'; }
@@ -115,7 +125,7 @@
     $('#settingsTitle').hidden = !settings;
     $('#profilePill').classList.toggle('open', settings);
     if (settings) renderProfiles();
-    if (v === 'matches') renderMatches();
+    if (v === 'matches') { renderMatchChips(); if (matchesDirty) renderMatches(); }
   }
   function goView(v) {
     if (v === currentView) return;
@@ -134,25 +144,29 @@
     }
     return h >>> 0;
   }
+  var orderCache = null, orderCacheKey = '';
+  function invalidateOrder() { orderCache = null; }
   function orderedNames() {
+    var key = (state.shuffle ? '1' : '0') + ':' + (state.seed || 1) + ':' + state.custom.length;
+    if (orderCache && orderCacheKey === key) return orderCache;
     var all = allNames();
-    if (!state.shuffle) return all;
-    var seed = state.seed || 1;
-    return all.slice().sort(function (a, b) {
-      var ka = sortKey(a.id, seed), kb = sortKey(b.id, seed);
-      return ka === kb ? (a.id < b.id ? -1 : 1) : ka - kb;
-    });
+    if (state.shuffle) {
+      var seed = state.seed || 1;
+      all = all.slice().sort(function (a, b) {
+        var ka = sortKey(a.id, seed), kb = sortKey(b.id, seed);
+        return ka === kb ? (a.id < b.id ? -1 : 1) : ka - kb;
+      });
+    }
+    orderCache = all; orderCacheKey = key;
+    return all;
   }
 
   /* ---------- deck ---------- */
   function buildPool() {
     var mine = state.votes[state.active] || {};
-    var theirs = state.votes[other(state.active)] || {};
     pool = orderedNames().filter(function (n) {
       if (state.gender !== 'all' && n.gender !== state.gender) return false;
-      if (mine[n.id]) return false;
-      if (state.hidePassed && theirs[n.id] === 'pass') return false;
-      return true;
+      return !mine[n.id];
     });
   }
 
@@ -164,20 +178,13 @@
   }
 
   function cardHtml(n) {
-    var peer = (state.votes[other(state.active)] || {})[n.id];
-    var who = profileName(other(state.active));
-    var peerLine = peer === 'super' ? who + ' starred this one'
-      : peer === 'like' ? who + ' liked this one'
-      : peer === 'pass' ? who + ' passed on this one'
-      : who + ' has not seen this yet';
     var tags = '<span class="tag">' + (n.gender === 'boy' ? 'Boy' : 'Girl') + '</span>';
     if (tagLabel(n)) tags += '<span class="tag ' + n.tag + '">' + esc(tagLabel(n)) + '</span>';
     return '<div class="stamp yes">LIKE</div><div class="stamp no">PASS</div>' +
       '<div class="tags">' + tags + '</div>' +
       '<h1 class="name">' + esc(n.name) + '</h1>' +
       '<p class="origin">' + esc(n.origin || '') + '</p>' +
-      '<p class="meaning">' + esc(n.meaning || '') + '</p>' +
-      '<p class="peer">' + esc(peerLine) + '</p>';
+      '<p class="meaning">' + esc(n.meaning || '') + '</p>';
   }
 
   function renderDeck() {
@@ -239,26 +246,38 @@
 
   function fly(card, verdict) {
     var id = card.dataset.id;
+    if (!id || card.dataset.gone) return;
+    card.dataset.gone = '1';
     var dir = verdict === 'pass' ? -1 : 1;
-    card.style.transition = 'transform .3s ease, opacity .3s ease';
-    card.style.transform = verdict === 'super'
-      ? 'translateY(-520px) rotate(6deg)'
-      : 'translate(' + dir * 480 + 'px,40px) rotate(' + dir * 22 + 'deg)';
-    card.style.opacity = '0';
+
+    // Move the leaving card onto its own layer, then rebuild the deck straight
+    // away. The next card is live immediately, so rapid swipes never queue up.
+    card.style.pointerEvents = 'none';
+    $('#deckFx').appendChild(card);
+    requestAnimationFrame(function () {
+      card.style.transition = 'transform .28s ease-out, opacity .28s ease-out';
+      card.style.transform = verdict === 'super'
+        ? 'translateY(-560px) rotate(6deg)'
+        : 'translate(' + dir * 520 + 'px,40px) rotate(' + dir * 22 + 'deg)';
+      card.style.opacity = '0';
+    });
+    setTimeout(function () { if (card.parentNode) card.parentNode.removeChild(card); }, 340);
+
+    pool = pool.filter(function (n) { return n.id !== id; });
+    renderDeck();
     castVote(id, verdict, true);
-    setTimeout(function () { buildPool(); renderDeck(); }, 180);
   }
 
   function castVote(id, verdict, track) {
     var had = (state.votes[state.active] || {})[id];
     state.votes[state.active][id] = verdict;
     if (track) undoStack.push({ profile: state.active, id: id, was: had });
-    save();
+    saveSoon();
     if (window.Sync) Sync.pushVote(state.active, id, verdict);
-    renderMatches();
-    if (liked(verdict) && liked((state.votes[other(state.active)] || {})[id]) && had !== verdict) {
+    touchMatches();
+    if (liked(verdict) && !liked(had) && liked((state.votes[other(state.active)] || {})[id])) {
       var n = byId(id);
-      if (n && !liked(had)) toast('It’s a match: ' + n.name);
+      if (n) toast('It’s a match: ' + n.name);
     }
   }
 
@@ -312,9 +331,49 @@
 
   /* ---------- matches ---------- */
   var matchFilter = 'all';
+  var matchesDirty = true;
+
+  function updateBadge() {
+    var c = 0;
+    allNames().forEach(function (n) { if (liked(vote1(n)) && liked(vote2(n))) c++; });
+    var bd = $('#matchBadge');
+    bd.hidden = c === 0;
+    bd.textContent = c;
+  }
+  // Called after every vote: cheap counter now, full redraw only when visible.
+  function touchMatches() {
+    matchesDirty = true;
+    updateBadge();
+    if (currentView === 'matches') renderMatches();
+  }
+
+  function renderMatchChips() {
+    var chips = [
+      ['all', 'All'],
+      ['dstar', '★★ Both starred'],
+      ['mystar', '★ ' + profileName(state.active) + '’s stars'],
+      ['theirstar', '★ ' + profileName(other(state.active)) + '’s stars'],
+      ['plain', 'Liked, not starred'],
+      ['commented', '💬 Has comments']
+    ];
+    $('#matchChips').innerHTML = chips.map(function (c) {
+      return '<button class="chip ' + (matchFilter === c[0] ? 'is-active' : '') +
+        '" data-m="' + c[0] + '" type="button">' + esc(c[1]) + '</button>';
+    }).join('');
+  }
+  $('#matchChips').addEventListener('click', function (e) {
+    var c = e.target.closest && e.target.closest('.chip');
+    if (!c) return;
+    matchFilter = c.dataset.m;
+    renderMatchChips();
+    renderMatches();
+  });
   function renderMatches() {
+    matchesDirty = false;
+    var me = state.active, them = other(state.active);
     var matches = [], solo = [];
     allNames().forEach(function (n) {
+      if (state.gender !== 'all' && n.gender !== state.gender) return;
       var a = vote1(n), b = vote2(n);
       if (liked(a) && liked(b)) matches.push(n);
       else if (liked(a) || liked(b)) solo.push(n);
@@ -325,8 +384,10 @@
     });
     var shown = matches.filter(function (n) {
       if (matchFilter === 'dstar') return starCount(n) === 2;
-      if (matchFilter === 'star') return starCount(n) > 0;
-      if (matchFilter === 'boy' || matchFilter === 'girl') return n.gender === matchFilter;
+      if (matchFilter === 'mystar') return (state.votes[me] || {})[n.id] === 'super';
+      if (matchFilter === 'theirstar') return (state.votes[them] || {})[n.id] === 'super';
+      if (matchFilter === 'plain') return starCount(n) === 0;
+      if (matchFilter === 'commented') return commentsFor(n.id).length > 0;
       return true;
     });
     $('#matchList').innerHTML = shown.length
@@ -342,9 +403,7 @@
     $('#matchSub').textContent = matches.length
       ? (both ? both + ' starred by both of you.' : any ? any + ' starred by one of you.' : 'Tap any name to change your vote or leave a comment.')
       : 'Names you both swipe right on land here.';
-    var bd = $('#matchBadge');
-    bd.hidden = matches.length === 0;
-    bd.textContent = matches.length;
+    updateBadge();
   }
 
   /* ---------- list ---------- */
@@ -455,7 +514,8 @@
     c.querySelectorAll('input[type=radio]').forEach(function (r) {
       r.addEventListener('change', function () {
         state.active = r.value; save(); undoStack = [];
-        renderProfiles(); renderPill(); buildPool(); renderDeck(); renderMatches();
+        renderProfiles(); renderPill(); buildPool(); renderDeck();
+        renderMatchChips(); renderMatches();
       });
     });
     c.querySelectorAll('input[type=text]').forEach(function (t) {
@@ -468,7 +528,6 @@
       });
     });
     $('#optShuffle').checked = !!state.shuffle;
-    $('#optHidePassed').checked = !!state.hidePassed;
     applyTheme();
   }
 
@@ -524,6 +583,7 @@
       state.gender = b.dataset.g; save();
       $$('#genderSeg .seg-btn').forEach(function (x) { x.classList.toggle('is-active', x === b); });
       buildPool(); renderDeck();
+      if (currentView === 'matches') renderMatches(); else matchesDirty = true;
     });
   });
 
@@ -563,19 +623,16 @@
   $('#optShuffle').addEventListener('change', function (e) {
     state.shuffle = e.target.checked;
     if (state.shuffle && (!state.seed || state.seed === 1)) state.seed = (Date.now() % 2147483647) || 7;
-    save();
+    save(); invalidateOrder();
     if (window.Sync) Sync.pushSettings({ shuffle: state.shuffle ? '1' : '0', seed: String(state.seed) });
     buildPool(); renderDeck();
   });
   $('#btnReshuffle').addEventListener('click', function () {
     state.seed = (Date.now() % 2147483647) || 7;
-    state.shuffle = true; save();
+    state.shuffle = true; save(); invalidateOrder();
     if (window.Sync) Sync.pushSettings({ shuffle: '1', seed: String(state.seed) });
     renderProfiles(); buildPool(); renderDeck();
     toast('New order, same on both phones');
-  });
-  $('#optHidePassed').addEventListener('change', function (e) {
-    state.hidePassed = e.target.checked; save(); buildPool(); renderDeck();
   });
 
   $('#btnSyncNow').addEventListener('click', function () {
@@ -626,6 +683,7 @@
       origin: $('#addOrigin').value.trim(), meaning: $('#addMeaning').value.trim(), tag: 'custom'
     });
     save();
+    invalidateOrder();
     if (window.Sync) Sync.pushName(state.custom[state.custom.length - 1]);
     $('#addName').value = ''; $('#addOrigin').value = ''; $('#addMeaning').value = '';
     closeTop();
@@ -646,6 +704,7 @@
 
     state.votes = { p1: d.votes.p1 || {}, p2: d.votes.p2 || {} };
     state.custom = d.custom || [];
+    invalidateOrder();
     if (d.comments) state.comments = d.comments;
     if (d.profileNames) {
       state.profiles.forEach(function (p) {
@@ -730,7 +789,8 @@
   function boot() {
     applyTheme();
     $$('#genderSeg .seg-btn').forEach(function (x) { x.classList.toggle('is-active', x.dataset.g === state.gender); });
-    renderPill(); renderProfiles(); buildPool(); renderDeck(); renderMatches();
+    renderPill(); renderProfiles(); buildPool(); renderDeck();
+    renderMatchChips(); renderMatches();
     setView('swipe');
   }
   try { history.replaceState({ n: 0 }, ''); } catch (e) {}

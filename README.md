@@ -31,6 +31,8 @@ and iOS Safari offers "Add to Home Screen".
 | `sync.js` | Supabase sync: queue, push, pull, live updates |
 | `MIGRATE-v1.2.sql` | Run once in Supabase when moving to v1.2 |
 | `MIGRATE-v1.3.sql` | Run once in Supabase when moving to v1.3 |
+
+v1.4 and v1.5 need no migration.
 | `config.js` | Your Supabase URL and anon key |
 | `supabase-setup.sql` | Run once in Supabase to create the tables |
 | `SETUP-SYNC.md` | Step by step guide to turning sync on |
@@ -50,6 +52,12 @@ Every name carries a `tag`:
 - `custom` — added from inside the app
 
 Boys render blue, girls render pink, everywhere in the app.
+
+As of v1.5 the deck holds 505 names: 251 boys and 254 girls. Beyond Sanskrit and
+Tamil it draws on Malayalam, Kannada, Telugu, Bengali, Odia, Marathi, Gujarati,
+Punjabi, Kashmiri, Assamese, Naga, Ladakhi and Himachali, plus Persian and
+Arabic as they are used in India. 55 of them are place names, rivers, valleys,
+hill towns and forts, and 15 come from ragas.
 
 ## Storage and sync
 
@@ -85,6 +93,40 @@ root it re-anchors instead of exiting.
 Auto, Light or Dark, set in Settings. Auto follows the phone. Dark is the same
 warm palette at low light, not a cold grey. The colours all come from CSS
 variables on `:root` and `html[data-theme="dark"]`.
+
+## The swipe screen shows nothing about the other person
+
+By design. The card carries the name, origin and meaning and that is all. You
+find out where you agree in Matches, not while you are deciding. The old
+"hide names the other one passed" option was removed for the same reason.
+
+## Filtering matches
+
+Gender comes from the Boys / Girls / Both control in the top bar, which now
+filters the deck and the matches list. The chips under the Matches heading are
+about the choices instead: both starred, each person's own stars, liked but not
+starred, and names that have comments. The chip labels carry the live profile
+names.
+
+## Why swiping is fast
+
+Three things, all local first.
+
+A leaving card is reparented into `#deckFx` and animates there, and the deck
+redraws in the same frame. The next card is interactive immediately, so a run
+of quick swipes never queues behind an animation.
+
+`saveSoon()` keeps state in memory and writes to `localStorage` 400ms later, so
+a burst of swipes serialises once rather than once per card. A forced `save()`
+runs on `pagehide` and when the tab is hidden.
+
+Matches redraw only when you are looking at them. Every vote updates the cheap
+badge count and sets a dirty flag; the full list is built when you open the tab.
+The ordered name list is cached and rebuilt only when the seed, the shuffle
+setting or the custom names change.
+
+On the network side, `sync.js` queues each change and pushes on a 500ms debounce,
+so twenty fast swipes go up as one batch.
 
 ## Verdict slots
 

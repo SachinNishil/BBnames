@@ -20,11 +20,13 @@
   function setQueue(q) {
     try { localStorage.setItem(QKEY, JSON.stringify(q)); } catch (e) {}
   }
+  // Queue locally and push a moment later, so a fast run of swipes goes up as
+  // one batch instead of one network round trip per card.
   function enqueue(op) {
     if (!S.client) return;
     var q = queue(); q.push(op); setQueue(q);
     setStatus('pending');
-    sync();
+    nudge();
   }
   function setStatus(s, msg) {
     S.status = s;
@@ -128,7 +130,7 @@
   var debounce;
   function nudge() {
     clearTimeout(debounce);
-    debounce = setTimeout(sync, 400);
+    debounce = setTimeout(sync, 500);
   }
 
   window.Sync = {

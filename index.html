@@ -40,6 +40,7 @@
     <section class="view is-active" id="view-swipe">
       <div class="deck-wrap">
         <div class="deck" id="deck"></div>
+        <div class="deck fx" id="deckFx"></div>
         <div class="empty" id="deckEmpty" hidden>
           <div class="empty-emoji">✦</div>
           <h2>That's the lot</h2>
@@ -60,13 +61,7 @@
     <section class="view" id="view-matches">
       <div class="scroll">
         <div class="section-head"><h2 id="matchHead">Matches</h2><p class="sub" id="matchSub"></p></div>
-        <div class="chips" id="matchChips">
-          <button class="chip is-active" data-m="all" type="button">All</button>
-          <button class="chip" data-m="dstar" type="button">★★ Both starred</button>
-          <button class="chip" data-m="star" type="button">★ Starred</button>
-          <button class="chip" data-m="boy" type="button">Boys</button>
-          <button class="chip" data-m="girl" type="button">Girls</button>
-        </div>
+        <div class="chips" id="matchChips"></div>
         <div id="matchList" class="rows"></div>
         <div class="section-head"><h2>Only one of you</h2><p class="sub">Liked by one. Worth a conversation.</p></div>
         <div id="soloList" class="rows"></div>
@@ -99,7 +94,6 @@
         <div class="section-head"><h2>Deck</h2></div>
         <div class="panel">
           <label class="row-toggle"><span>Shuffle the deck<em>Shared. Same order for both of you.</em></span><input type="checkbox" id="optShuffle" /></label>
-          <label class="row-toggle"><span>Hide names the other one passed</span><input type="checkbox" id="optHidePassed" /></label>
           <button class="btn ghost full" id="btnReshuffle" type="button">Shuffle into a new order</button>
           <button class="btn ghost full" id="btnResetProfile" type="button">Reset this profile's swipes</button>
         </div>
@@ -116,7 +110,7 @@
           <button class="btn danger full" id="btnWipe" type="button">Clear all app data</button>
           <p class="note">Install from your browser menu to keep it on your home screen.</p>
         </div>
-        <p class="version">Name Swipe v1.3.0</p>
+        <p class="version">Name Swipe v1.5.0</p>
       </div>
     </section>
   </main>
