@@ -30,6 +30,7 @@ and iOS Safari offers "Add to Home Screen".
 | `data/names.js` | The name list, generated from the source sheet |
 | `sync.js` | Supabase sync: queue, push, pull, live updates |
 | `MIGRATE-v1.2.sql` | Run once in Supabase when moving to v1.2 |
+| `MIGRATE-v1.3.sql` | Run once in Supabase when moving to v1.3 |
 | `config.js` | Your Supabase URL and anon key |
 | `supabase-setup.sql` | Run once in Supabase to create the tables |
 | `SETUP-SYNC.md` | Step by step guide to turning sync on |
@@ -69,6 +70,36 @@ See `SETUP-SYNC.md` to turn sync on.
 ## Keyboard
 
 Right arrow likes, left arrow passes, up arrow super likes, down arrow undoes.
+
+## Navigation
+
+Two tabs, Swipe and Matches. The avatar in the top left opens Settings and
+tapping it again comes back. The gender filter hides while Settings is open.
+
+Every view change and overlay pushes a history entry, so the phone's back
+gesture steps back through what you did rather than closing the app. At the
+root it re-anchors instead of exiting.
+
+## Theme
+
+Auto, Light or Dark, set in Settings. Auto follows the phone. Dark is the same
+warm palette at low light, not a cold grey. The colours all come from CSS
+variables on `:root` and `html[data-theme="dark"]`.
+
+## Verdict slots
+
+Every row in Matches and in the list shows two slots, the first for profile 1
+and the second for profile 2, each captioned with that person's initial. The
+icon is a tick on sage for a like, a cross on terracotta for a pass, a star on
+gold for a super like, and a dashed outline when they have not seen it. All
+four are the same size.
+
+## Comments and changing your vote
+
+Tapping any row opens the name. From there you can change your own vote between
+Pass, Like and Star, or tap the current one again to clear it, and you can leave
+comments. Comments are shared through the `comments` table and show who wrote
+them. A row with comments carries a small count.
 
 ## Super likes
 

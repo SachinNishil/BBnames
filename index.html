@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
 <title>Name Swipe</title>
 <meta name="description" content="A swipe game for picking a baby name, together." />
-<meta name="theme-color" content="#FBF4EA" />
+<meta name="theme-color" content="#FBF4EA" id="themeMeta" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="Name Swipe" />
@@ -32,6 +32,7 @@
       <button data-g="girl" class="seg-btn girl" type="button">Girls</button>
       <button data-g="all" class="seg-btn is-active" type="button">Both</button>
     </div>
+    <h1 class="over-title" id="settingsTitle" hidden>Settings</h1>
   </header>
 
   <main>
@@ -61,6 +62,7 @@
         <div class="section-head"><h2 id="matchHead">Matches</h2><p class="sub" id="matchSub"></p></div>
         <div class="chips" id="matchChips">
           <button class="chip is-active" data-m="all" type="button">All</button>
+          <button class="chip" data-m="dstar" type="button">★★ Both starred</button>
           <button class="chip" data-m="star" type="button">★ Starred</button>
           <button class="chip" data-m="boy" type="button">Boys</button>
           <button class="chip" data-m="girl" type="button">Girls</button>
@@ -76,6 +78,17 @@
       <div class="scroll">
         <div class="section-head"><h2>Who is swiping?</h2><p class="sub">Every swipe is saved against this profile.</p></div>
         <div class="profile-cards" id="profileCards"></div>
+
+        <div class="section-head"><h2>Appearance</h2></div>
+        <div class="panel">
+          <div class="row-toggle no-line"><span>Theme</span>
+            <div class="seg small" id="themeSeg">
+              <button class="seg-btn" data-t="auto" type="button">Auto</button>
+              <button class="seg-btn" data-t="light" type="button">Light</button>
+              <button class="seg-btn" data-t="dark" type="button">Dark</button>
+            </div>
+          </div>
+        </div>
 
         <div class="section-head"><h2>Names</h2></div>
         <div class="panel">
@@ -103,7 +116,7 @@
           <button class="btn danger full" id="btnWipe" type="button">Clear all app data</button>
           <p class="note">Install from your browser menu to keep it on your home screen.</p>
         </div>
-        <p class="version">Name Swipe v1.2.0</p>
+        <p class="version">Name Swipe v1.3.0</p>
       </div>
     </section>
   </main>
@@ -111,7 +124,6 @@
   <nav class="tabs">
     <button class="tab is-active" data-view="swipe" type="button"><span>⇆</span>Swipe</button>
     <button class="tab" data-view="matches" type="button"><span>♥</span>Matches<i class="badge" id="matchBadge" hidden></i></button>
-    <button class="tab" data-view="settings" type="button"><span>⚙</span>Settings</button>
   </nav>
 </div>
 
@@ -133,6 +145,19 @@
     </div>
     <div id="fullList" class="rows"></div>
   </div>
+</section>
+
+<!-- name detail: change your vote, read and add comments -->
+<section class="panel-over" id="detailPanel" hidden>
+  <header class="over-bar">
+    <button class="back" id="detailBack" type="button" aria-label="Back">←</button>
+    <h2 id="detailTitle">Name</h2>
+  </header>
+  <div class="scroll" id="detailBody"></div>
+  <form class="comment-bar" id="commentForm">
+    <input type="text" id="commentInput" placeholder="Add a comment" autocomplete="off" />
+    <button class="btn" type="submit">Post</button>
+  </form>
 </section>
 
 <div class="sheet" id="addSheet" hidden>

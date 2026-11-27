@@ -47,6 +47,12 @@
       var rows = Object.keys(op.kv).map(function (k) { return { key: k, value: String(op.kv[k]) }; });
       return c.from('settings').upsert(rows, { onConflict: 'key' });
     }
+    if (op.t === 'comment') {
+      return c.from('comments').insert({
+        name_id: op.row.name_id, profile_id: op.row.profile_id,
+        body: op.row.body, created_at: op.row.created_at
+      });
+    }
     if (op.t === 'name') return c.from('names').upsert(op.row, { onConflict: 'id' });
     if (op.t === 'profile') {
       return c.from('profiles').upsert({ id: op.id, display_name: op.name }, { onConflict: 'id' });
@@ -78,7 +84,8 @@
       c.from('votes').select('*'),
       c.from('names').select('*'),
       c.from('profiles').select('*'),
-      c.from('settings').select('*')
+      c.from('settings').select('*'),
+      c.from('comments').select('*').order('created_at', { ascending: true })
     ]).then(function (res) {
       var err = res.filter(function (r) { return r.error; })[0];
       if (err) { setStatus('error', err.error.message); return; }
@@ -94,8 +101,14 @@
       res[2].data.forEach(function (r) { pnames[r.id] = r.display_name; });
       var settings = {};
       (res[3] && res[3].data ? res[3].data : []).forEach(function (r) { settings[r.key] = r.value; });
+      var comments = (res[4] && res[4].data ? res[4].data : []).map(function (r) {
+        return { id: r.id, name_id: r.name_id, profile_id: r.profile_id, body: r.body, created_at: r.created_at };
+      });
       if (S.h && S.h.onRemote) {
-        S.h.onRemote({ votes: votes, custom: custom, profileNames: pnames, settings: settings });
+        S.h.onRemote({
+          votes: votes, custom: custom, profileNames: pnames,
+          settings: settings, comments: comments
+        });
       }
       setStatus('live');
     }).catch(function (e) { setStatus('offline', String(e && e.message || e)); });
@@ -139,6 +152,7 @@
           .on('postgres_changes', { event: '*', schema: 'public', table: 'names' }, nudge)
           .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, nudge)
           .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, nudge)
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'comments' }, nudge)
           .subscribe();
       } catch (e) {}
       window.addEventListener('online', sync);
@@ -146,6 +160,7 @@
     },
     pushVote: function (profile, name, verdict) { enqueue({ t: 'vote', profile: profile, name: name, verdict: verdict }); },
     clearVote: function (profile, name) { enqueue({ t: 'vote', profile: profile, name: name, verdict: null }); },
+    pushComment: function (row) { enqueue({ t: 'comment', row: row }); },
     pushSettings: function (kv) { enqueue({ t: 'settings', kv: kv }); },
     resetProfile: function (profile) { enqueue({ t: 'reset', profile: profile }); },
     pushName: function (row) { enqueue({ t: 'name', row: row }); },

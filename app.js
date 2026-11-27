@@ -1,4 +1,4 @@
-/* Name Swipe v1.2 */
+/* Name Swipe v1.3 */
 (function () {
   'use strict';
 
@@ -12,14 +12,17 @@
     gender: 'all',
     votes: { p1: {}, p2: {} },
     custom: [],
+    comments: [],
     shuffle: false,
     seed: 1,
-    hidePassed: false
+    hidePassed: false,
+    theme: 'auto'
   };
 
   var state = load();
-  var history = [];
+  var undoStack = [];
   var pool = [];
+  var detailId = null;
 
   function load() {
     try {
@@ -28,7 +31,9 @@
       s.votes = Object.assign({ p1: {}, p2: {} }, raw.votes || {});
       s.profiles = raw.profiles && raw.profiles.length === 2 ? raw.profiles : defaults.profiles.slice();
       s.custom = raw.custom || [];
+      s.comments = raw.comments || [];
       s.seed = raw.seed || 1;
+      s.theme = raw.theme || 'auto';
       return s;
     } catch (e) { return JSON.parse(JSON.stringify(defaults)); }
   }
@@ -40,8 +45,12 @@
     var p = state.profiles.filter(function (x) { return x.id === id; })[0];
     return (p && p.name && p.name.trim()) || (id === 'p1' ? 'Profile 1' : 'Profile 2');
   }
+  function initial(id) { return (profileName(id).trim()[0] || '?').toUpperCase(); }
   function byId(id) { return allNames().filter(function (n) { return n.id === id; })[0]; }
   function liked(v) { return v === 'like' || v === 'super'; }
+  function vote1(n) { return (state.votes.p1 || {})[n.id]; }
+  function vote2(n) { return (state.votes.p2 || {})[n.id]; }
+  function starCount(n) { return (vote1(n) === 'super' ? 1 : 0) + (vote2(n) === 'super' ? 1 : 0); }
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -55,9 +64,68 @@
     toast._t = setTimeout(function () { t.hidden = true; }, 2000);
   }
 
-  /* ---------- shared shuffle ----------
-     Both phones hold the same seed, so sortKey gives both the same order.
-     Hashing each id means new names slot in without reshuffling the rest. */
+  /* ---------- theme ---------- */
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', state.theme);
+    var dark = state.theme === 'dark' ||
+      (state.theme === 'auto' && window.matchMedia &&
+       window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var m = $('#themeMeta');
+    if (m) m.setAttribute('content', dark ? '#1E1A17' : '#FBF4EA');
+    $$('#themeSeg .seg-btn').forEach(function (b) {
+      b.classList.toggle('is-active', b.dataset.t === state.theme);
+    });
+  }
+
+  /* ---------- navigation, with a back stack ---------- */
+  var currentView = 'swipe';
+  var navStack = [];
+
+  function snapshot() {
+    return {
+      view: currentView,
+      list: $('#listPanel').hidden === false,
+      detail: $('#detailPanel').hidden === false ? detailId : null,
+      add: $('#addSheet').hidden === false
+    };
+  }
+  function pushNav() {
+    navStack.push(snapshot());
+    try { history.pushState({ n: navStack.length }, ''); } catch (e) {}
+  }
+  function restore(s) {
+    $('#addSheet').hidden = !s.add;
+    $('#listPanel').hidden = !s.list;
+    if (s.detail) { detailId = s.detail; renderDetail(); $('#detailPanel').hidden = false; }
+    else $('#detailPanel').hidden = true;
+    if (s.list) renderList();
+    setView(s.view);
+  }
+  window.addEventListener('popstate', function () {
+    if (navStack.length) restore(navStack.pop());
+    else { try { history.pushState({ n: 0 }, ''); } catch (e) {} }
+  });
+
+  function setView(v) {
+    currentView = v;
+    $$('.view').forEach(function (s) { s.classList.toggle('is-active', s.id === 'view-' + v); });
+    $$('.tab').forEach(function (t) { t.classList.toggle('is-active', t.dataset.view === v); });
+    var settings = v === 'settings';
+    $('#genderSeg').hidden = settings;
+    $('#settingsTitle').hidden = !settings;
+    $('#profilePill').classList.toggle('open', settings);
+    if (settings) renderProfiles();
+    if (v === 'matches') renderMatches();
+  }
+  function goView(v) {
+    if (v === currentView) return;
+    pushNav();
+    setView(v);
+  }
+  function openOverlay(fn) { pushNav(); fn(); }
+  function closeTop() { if (navStack.length) history.back(); }
+
+  /* ---------- shared shuffle ---------- */
   function sortKey(id, seed) {
     var h = (2166136261 ^ seed) >>> 0;
     for (var i = 0; i < id.length; i++) {
@@ -138,17 +206,17 @@
   }
 
   function attachDrag(card) {
-    var startX = 0, startY = 0, dx = 0, dy = 0, dragging = false;
+    var startX = 0, dx = 0, dy = 0, dragging = false;
     var yes = card.querySelector('.stamp.yes'), no = card.querySelector('.stamp.no');
     card.addEventListener('pointerdown', function (e) {
       if (e.button != null && e.button !== 0) return;
-      dragging = true; startX = e.clientX; startY = e.clientY;
+      dragging = true; startX = e.clientX;
       card.style.transition = 'none'; card.style.cursor = 'grabbing';
       if (card.setPointerCapture) card.setPointerCapture(e.pointerId);
     });
     card.addEventListener('pointermove', function (e) {
       if (!dragging) return;
-      dx = e.clientX - startX; dy = e.clientY - startY;
+      dx = e.clientX - startX;
       card.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + (dx / 18) + 'deg)';
       var p = Math.min(Math.abs(dx) / 110, 1);
       yes.style.opacity = dx > 0 ? p : 0;
@@ -163,7 +231,7 @@
         card.style.transform = 'translate(0,0) rotate(0)';
         yes.style.opacity = 0; no.style.opacity = 0;
       }
-      dx = dy = 0;
+      dx = 0;
     }
     card.addEventListener('pointerup', up);
     card.addEventListener('pointercancel', up);
@@ -177,19 +245,20 @@
       ? 'translateY(-520px) rotate(6deg)'
       : 'translate(' + dir * 480 + 'px,40px) rotate(' + dir * 22 + 'deg)';
     card.style.opacity = '0';
-    vote(id, verdict);
+    castVote(id, verdict, true);
     setTimeout(function () { buildPool(); renderDeck(); }, 180);
   }
 
-  function vote(id, verdict) {
+  function castVote(id, verdict, track) {
+    var had = (state.votes[state.active] || {})[id];
     state.votes[state.active][id] = verdict;
-    history.push({ profile: state.active, id: id });
+    if (track) undoStack.push({ profile: state.active, id: id, was: had });
     save();
     if (window.Sync) Sync.pushVote(state.active, id, verdict);
     renderMatches();
-    if (liked(verdict) && liked((state.votes[other(state.active)] || {})[id])) {
+    if (liked(verdict) && liked((state.votes[other(state.active)] || {})[id]) && had !== verdict) {
       var n = byId(id);
-      if (n) toast('It’s a match: ' + n.name);
+      if (n && !liked(had)) toast('It’s a match: ' + n.name);
     }
   }
 
@@ -204,90 +273,79 @@
   }
 
   function undo() {
-    var last = history.pop();
+    var last = undoStack.pop();
     if (!last) { toast('Nothing to undo'); return; }
-    delete state.votes[last.profile][last.id];
+    if (last.was) state.votes[last.profile][last.id] = last.was;
+    else delete state.votes[last.profile][last.id];
     save();
-    if (window.Sync) Sync.clearVote(last.profile, last.id);
+    if (window.Sync) {
+      if (last.was) Sync.pushVote(last.profile, last.id, last.was);
+      else Sync.clearVote(last.profile, last.id);
+    }
     buildPool(); renderDeck(); renderMatches();
     var n = byId(last.id);
     toast(n ? 'Brought back ' + n.name : 'Undone');
   }
 
   /* ---------- rows ---------- */
-  function miniHtml(n, right, withStar) {
-    var v1 = (state.votes.p1 || {})[n.id], v2 = (state.votes.p2 || {})[n.id];
-    var dots = '<span class="verd">' +
-      '<span class="dot ' + (liked(v1) ? 'y' : v1 === 'pass' ? 'n' : '') + '"></span>' +
-      '<span class="dot ' + (liked(v2) ? 'y' : v2 === 'pass' ? 'n' : '') + '"></span></span>';
-    var star = '';
-    if (withStar) {
-      var on = v1 === 'super' || v2 === 'super';
-      star = '<button class="starbtn ' + (on ? '' : 'off') + '" data-star="' + n.id + '" type="button" ' +
-        'aria-label="Star">' + (on ? '★' : '☆') + '</button>';
-    }
-    return '<div class="mini ' + n.gender + '"><span class="swatch"></span>' +
-      '<div class="m-main"><div class="m-name">' + esc(n.name) + '</div>' +
-      '<div class="m-meta">' + esc(n.origin || '') + (n.meaning ? ' &middot; ' + esc(n.meaning) : '') + '</div></div>' +
-      '<div class="m-right">' + (right ? '<span class="m-tag">' + right + '</span>' : '') + dots + star + '</div></div>';
+  var ICON = { like: '', pass: '', super: '★' };
+  function slotHtml(pid, v) {
+    var cls = v === 'super' ? 'super' : v === 'like' ? 'like' : v === 'pass' ? 'pass' : 'none';
+    var glyph = v === 'super' ? '★' : v === 'pass' ? '✕' : v === 'like' ? '✓' : '';
+    return '<span class="slot"><span class="ic ' + cls + '">' + glyph + '</span>' +
+      '<span class="cap">' + esc(initial(pid)) + '</span></span>';
+  }
+  function commentsFor(id) {
+    return state.comments.filter(function (c) { return c.name_id === id; })
+      .sort(function (a, b) { return (a.created_at || '') < (b.created_at || '') ? -1 : 1; });
   }
 
-  function starred(n) {
-    return (state.votes.p1 || {})[n.id] === 'super' || (state.votes.p2 || {})[n.id] === 'super';
+  function rowHtml(n, tappable) {
+    var cc = commentsFor(n.id).length;
+    return '<button class="mini ' + n.gender + (tappable ? '' : ' flat') + '" data-open="' + n.id + '" type="button">' +
+      '<span class="swatch"></span>' +
+      '<span class="m-main"><span class="m-name">' + esc(n.name) + '</span>' +
+      '<span class="m-meta">' + esc(n.origin || '') + (n.meaning ? ' &middot; ' + esc(n.meaning) : '') + '</span>' +
+      (cc ? '<span class="cbadge">💬 ' + cc + '</span>' : '') + '</span>' +
+      '<span class="m-right">' + slotHtml('p1', vote1(n)) + slotHtml('p2', vote2(n)) + '</span></button>';
   }
 
   /* ---------- matches ---------- */
   var matchFilter = 'all';
   function renderMatches() {
-    var v1 = state.votes.p1 || {}, v2 = state.votes.p2 || {};
     var matches = [], solo = [];
     allNames().forEach(function (n) {
-      if (liked(v1[n.id]) && liked(v2[n.id])) matches.push(n);
-      else if (liked(v1[n.id]) || liked(v2[n.id])) solo.push(n);
+      var a = vote1(n), b = vote2(n);
+      if (liked(a) && liked(b)) matches.push(n);
+      else if (liked(a) || liked(b)) solo.push(n);
     });
     matches.sort(function (a, b) {
-      var sa = starred(a) ? 0 : 1, sb = starred(b) ? 0 : 1;
-      return sa - sb || (a.name < b.name ? -1 : 1);
+      var d = starCount(b) - starCount(a);
+      return d || (a.name < b.name ? -1 : 1);
     });
     var shown = matches.filter(function (n) {
-      if (matchFilter === 'star') return starred(n);
+      if (matchFilter === 'dstar') return starCount(n) === 2;
+      if (matchFilter === 'star') return starCount(n) > 0;
       if (matchFilter === 'boy' || matchFilter === 'girl') return n.gender === matchFilter;
       return true;
     });
     $('#matchList').innerHTML = shown.length
-      ? shown.map(function (n) { return miniHtml(n, '', true); }).join('')
+      ? shown.map(function (n) { return rowHtml(n, true); }).join('')
       : '<p class="hint">' + (matches.length ? 'None in this filter.' : 'No matches yet. Keep swiping.') + '</p>';
     $('#soloList').innerHTML = solo.length
-      ? solo.map(function (n) {
-          var who = liked(v1[n.id]) ? profileName('p1') : profileName('p2');
-          return miniHtml(n, esc(who), false);
-        }).join('')
+      ? solo.map(function (n) { return rowHtml(n, true); }).join('')
       : '<p class="hint">Nothing here yet.</p>';
-    var stars = matches.filter(starred).length;
+
+    var both = matches.filter(function (n) { return starCount(n) === 2; }).length;
+    var any = matches.filter(function (n) { return starCount(n) > 0; }).length;
     $('#matchHead').textContent = matches.length ? matches.length + ' matches' : 'Matches';
     $('#matchSub').textContent = matches.length
-      ? (stars ? stars + ' starred. Those are the shortlist.' : 'Star the ones worth keeping.')
+      ? (both ? both + ' starred by both of you.' : any ? any + ' starred by one of you.' : 'Tap any name to change your vote or leave a comment.')
       : 'Names you both swipe right on land here.';
-    var b = $('#matchBadge');
-    b.hidden = matches.length === 0;
-    b.textContent = matches.length;
+    var bd = $('#matchBadge');
+    bd.hidden = matches.length === 0;
+    bd.textContent = matches.length;
   }
-
-  function toggleStar(id) {
-    var mine = state.votes[state.active] || {};
-    var next = mine[id] === 'super' ? 'like' : 'super';
-    state.votes[state.active][id] = next;
-    save();
-    if (window.Sync) Sync.pushVote(state.active, id, next);
-    renderMatches();
-    var n = byId(id);
-    if (n) toast(next === 'super' ? 'Starred ' + n.name : 'Unstarred ' + n.name);
-  }
-
-  document.addEventListener('click', function (e) {
-    var b = e.target.closest && e.target.closest('[data-star]');
-    if (b) toggleStar(b.dataset.star);
-  });
 
   /* ---------- list ---------- */
   var listFilter = 'all';
@@ -300,9 +358,88 @@
       return (n.name + ' ' + (n.origin || '') + ' ' + (n.meaning || '')).toLowerCase().indexOf(q) > -1;
     });
     $('#fullList').innerHTML = rows.length
-      ? rows.map(function (n) { return miniHtml(n, esc(tagLabel(n) || ''), false); }).join('')
+      ? rows.map(function (n) { return rowHtml(n, true); }).join('')
       : '<p class="hint">Nothing matches that search.</p>';
   }
+
+  /* ---------- detail ---------- */
+  function renderDetail() {
+    var n = byId(detailId);
+    if (!n) return;
+    $('#detailTitle').textContent = n.name;
+    var mine = (state.votes[state.active] || {})[n.id];
+    var theirId = other(state.active);
+    var theirs = (state.votes[theirId] || {})[n.id];
+    var theirWord = theirs === 'super' ? 'starred it' : theirs === 'like' ? 'liked it'
+      : theirs === 'pass' ? 'passed on it' : 'has not seen it yet';
+
+    var opts = [['pass', '✕', 'Pass'], ['like', '♥', 'Like'], ['super', '★', 'Star']];
+    var votes = opts.map(function (o) {
+      return '<button class="vote-btn ' + (mine === o[0] ? 'on' : '') + '" data-v="' + o[0] + '" type="button">' +
+        '<b>' + o[1] + '</b>' + o[2] + '</button>';
+    }).join('');
+
+    var list = commentsFor(n.id);
+    var cmts = list.length ? list.map(function (c) {
+      var when = '';
+      try { when = new Date(c.created_at).toLocaleString([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) {}
+      return '<div class="cmt"><div class="who">' + esc(profileName(c.profile_id)) +
+        '<i>' + esc(when) + '</i></div><div class="body">' + esc(c.body) + '</div></div>';
+    }).join('') : '<p class="hint">No comments yet. Say what you think.</p>';
+
+    $('#detailBody').innerHTML =
+      '<div class="d-hero ' + n.gender + '"><div class="n">' + esc(n.name) + '</div>' +
+      '<div class="o">' + esc(n.origin || '') + '</div>' +
+      '<div class="m">' + esc(n.meaning || '') + '</div></div>' +
+      '<div class="d-label">Your call</div><div class="vote-seg">' + votes + '</div>' +
+      '<div class="d-label">' + esc(profileName(theirId)) + '</div>' +
+      '<div class="their">' + slotHtml(theirId, theirs) + '<span>' + esc(profileName(theirId) + ' ' + theirWord) + '</span></div>' +
+      '<div class="d-label">Comments</div>' + cmts;
+
+    $$('#detailBody .vote-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var v = b.dataset.v;
+        if (mine === v) { 
+          delete state.votes[state.active][n.id];
+          save();
+          if (window.Sync) Sync.clearVote(state.active, n.id);
+          renderMatches();
+        } else {
+          castVote(n.id, v, false);
+        }
+        buildPool(); renderDeck(); renderDetail();
+        if ($('#listPanel').hidden === false) renderList();
+      });
+    });
+  }
+
+  function openDetail(id) {
+    detailId = id;
+    openOverlay(function () { renderDetail(); $('#detailPanel').hidden = false; });
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-open]');
+    if (b) openDetail(b.dataset.open);
+  });
+
+  $('#commentForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = $('#commentInput');
+    var body = input.value.trim();
+    if (!body || !detailId) return;
+    var c = {
+      id: 'tmp-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+      name_id: detailId, profile_id: state.active, body: body,
+      created_at: new Date().toISOString()
+    };
+    state.comments.push(c);
+    save();
+    if (window.Sync) Sync.pushComment(c);
+    input.value = '';
+    renderDetail(); renderMatches();
+    if ($('#listPanel').hidden === false) renderList();
+  });
 
   /* ---------- settings ---------- */
   function renderProfiles() {
@@ -317,7 +454,7 @@
     }).join('');
     c.querySelectorAll('input[type=radio]').forEach(function (r) {
       r.addEventListener('change', function () {
-        state.active = r.value; save(); history = [];
+        state.active = r.value; save(); undoStack = [];
         renderProfiles(); renderPill(); buildPool(); renderDeck(); renderMatches();
       });
     });
@@ -332,21 +469,23 @@
     });
     $('#optShuffle').checked = !!state.shuffle;
     $('#optHidePassed').checked = !!state.hidePassed;
+    applyTheme();
   }
 
   function renderPill() {
-    var n = profileName(state.active);
-    $('#profilePill').textContent = (n.trim()[0] || '?').toUpperCase();
-    $('#profilePill').setAttribute('aria-label', 'Swiping as ' + n + '. Tap to switch.');
+    $('#profilePill').textContent = initial(state.active);
+    $('#profilePill').setAttribute('aria-label', 'Swiping as ' + profileName(state.active) + '. Tap for settings.');
   }
 
   function csv() {
-    var head = ['Name', 'Gender', 'Origin', 'Meaning', 'Tag', profileName('p1'), profileName('p2'), 'Match', 'Starred'];
+    var head = ['Name', 'Gender', 'Origin', 'Meaning', 'Tag', profileName('p1'), profileName('p2'),
+      'Match', 'Stars', 'Comments'];
     var lines = [head];
     allNames().forEach(function (n) {
-      var a = (state.votes.p1 || {})[n.id] || '', b = (state.votes.p2 || {})[n.id] || '';
+      var a = vote1(n) || '', b = vote2(n) || '';
+      var cs = commentsFor(n.id).map(function (c) { return profileName(c.profile_id) + ': ' + c.body; }).join(' | ');
       lines.push([n.name, n.gender, n.origin || '', n.meaning || '', n.tag || '', a, b,
-        (liked(a) && liked(b)) ? 'yes' : '', starred(n) ? 'yes' : '']);
+        (liked(a) && liked(b)) ? 'yes' : '', starCount(n) || '', cs]);
     });
     return lines.map(function (r) {
       return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
@@ -360,18 +499,25 @@
     document.body.appendChild(a); a.click(); a.remove();
   }
 
-  /* ---------- views ---------- */
-  function switchView(v) {
-    $$('.view').forEach(function (s) { s.classList.toggle('is-active', s.id === 'view-' + v); });
-    $$('.tab').forEach(function (t) { t.classList.toggle('is-active', t.dataset.view === v); });
-    if (v === 'settings') renderProfiles();
-    if (v === 'matches') renderMatches();
-  }
-
+  /* ---------- wiring ---------- */
   $$('.tab').forEach(function (t) {
-    t.addEventListener('click', function () { switchView(t.dataset.view); });
+    t.addEventListener('click', function () { goView(t.dataset.view); });
   });
-  $('#profilePill').addEventListener('click', function () { switchView('settings'); });
+  $('#profilePill').addEventListener('click', function () {
+    if (currentView === 'settings') closeTop();
+    else goView('settings');
+  });
+
+  $$('#themeSeg .seg-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.theme = b.dataset.t; save(); applyTheme();
+    });
+  });
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+    } catch (e) {}
+  }
 
   $$('#genderSeg .seg-btn').forEach(function (b) {
     b.addEventListener('click', function () {
@@ -386,8 +532,8 @@
   $('#btnSuper').addEventListener('click', function () { swipeTop('super'); });
   $('#btnUndo').addEventListener('click', undo);
   document.addEventListener('keydown', function (e) {
-    if (!$('#view-swipe').classList.contains('is-active')) return;
-    if ($('#listPanel').hidden === false || $('#addSheet').hidden === false) return;
+    if (currentView !== 'swipe') return;
+    if ($('#listPanel').hidden === false || $('#addSheet').hidden === false || $('#detailPanel').hidden === false) return;
     if (/input|textarea/i.test(e.target.tagName || '')) return;
     if (e.key === 'ArrowRight') swipeTop('like');
     if (e.key === 'ArrowLeft') swipeTop('pass');
@@ -404,7 +550,7 @@
   });
 
   function resetActive() {
-    state.votes[state.active] = {}; save(); history = [];
+    state.votes[state.active] = {}; save(); undoStack = [];
     if (window.Sync) Sync.resetProfile(state.active);
     buildPool(); renderDeck(); renderMatches(); renderProfiles();
   }
@@ -438,16 +584,17 @@
   });
   $('#btnExport').addEventListener('click', download);
   $('#btnWipe').addEventListener('click', function () {
-    if (!confirm('This clears both profiles, their swipes and any names you added, on this phone. Continue?')) return;
+    if (!confirm('This clears both profiles, their swipes, comments and any names you added, on this phone. Continue?')) return;
     localStorage.removeItem(KEY);
     state = JSON.parse(JSON.stringify(defaults));
-    history = []; save(); boot(); toast('All data cleared');
+    undoStack = []; save(); boot(); toast('All data cleared');
   });
 
   $('#btnOpenList').addEventListener('click', function () {
-    $('#listPanel').hidden = false; renderList();
+    openOverlay(function () { $('#listPanel').hidden = false; renderList(); });
   });
-  $('#listBack').addEventListener('click', function () { $('#listPanel').hidden = true; });
+  $('#listBack').addEventListener('click', closeTop);
+  $('#detailBack').addEventListener('click', closeTop);
   $('#search').addEventListener('input', renderList);
   $$('#chips .chip').forEach(function (c) {
     c.addEventListener('click', function () {
@@ -464,9 +611,11 @@
       $$('#addGender .seg-btn').forEach(function (x) { x.classList.toggle('is-active', x === b); });
     });
   });
-  $('#btnAddOpen').addEventListener('click', function () { $('#addSheet').hidden = false; $('#addName').focus(); });
-  $('#addCancel').addEventListener('click', function () { $('#addSheet').hidden = true; });
-  $('#addSheet').addEventListener('click', function (e) { if (e.target.id === 'addSheet') $('#addSheet').hidden = true; });
+  $('#btnAddOpen').addEventListener('click', function () {
+    openOverlay(function () { $('#addSheet').hidden = false; $('#addName').focus(); });
+  });
+  $('#addCancel').addEventListener('click', closeTop);
+  $('#addSheet').addEventListener('click', function (e) { if (e.target.id === 'addSheet') closeTop(); });
   $('#addSave').addEventListener('click', function () {
     var name = $('#addName').value.trim();
     if (!name) { toast('Give it a name first'); return; }
@@ -479,7 +628,7 @@
     save();
     if (window.Sync) Sync.pushName(state.custom[state.custom.length - 1]);
     $('#addName').value = ''; $('#addOrigin').value = ''; $('#addMeaning').value = '';
-    $('#addSheet').hidden = true;
+    closeTop();
     buildPool(); renderDeck(); renderMatches();
     if ($('#listPanel').hidden === false) renderList();
     toast(name + ' added to the deck');
@@ -487,8 +636,7 @@
 
   /* ---------- sync ---------- */
   function matchIds() {
-    var v1 = state.votes.p1 || {}, v2 = state.votes.p2 || {};
-    return allNames().filter(function (n) { return liked(v1[n.id]) && liked(v2[n.id]); })
+    return allNames().filter(function (n) { return liked(vote1(n)) && liked(vote2(n)); })
       .map(function (n) { return n.id; });
   }
 
@@ -498,6 +646,7 @@
 
     state.votes = { p1: d.votes.p1 || {}, p2: d.votes.p2 || {} };
     state.custom = d.custom || [];
+    if (d.comments) state.comments = d.comments;
     if (d.profileNames) {
       state.profiles.forEach(function (p) {
         if (d.profileNames[p.id]) p.name = d.profileNames[p.id];
@@ -517,6 +666,7 @@
     renderDeck();
     renderMatches();
     if ($('#listPanel').hidden === false) renderList();
+    if ($('#detailPanel').hidden === false && document.activeElement !== $('#commentInput')) renderDetail();
     var active = document.activeElement;
     if (!(active && active.closest && active.closest('.pcard'))) renderProfiles();
     renderPill();
@@ -578,9 +728,12 @@
   }
 
   function boot() {
+    applyTheme();
     $$('#genderSeg .seg-btn').forEach(function (x) { x.classList.toggle('is-active', x.dataset.g === state.gender); });
     renderPill(); renderProfiles(); buildPool(); renderDeck(); renderMatches();
+    setView('swipe');
   }
+  try { history.replaceState({ n: 0 }, ''); } catch (e) {}
   boot();
   window.addEventListener('load', wireUpdates);
 })();
