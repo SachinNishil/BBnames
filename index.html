@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<title>Name Swipe</title>
+<meta name="description" content="A swipe game for picking a baby name, together." />
+<meta name="theme-color" content="#12121a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Name Swipe" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icons/icon-180.png" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <button class="profile-pill" id="profilePill" type="button">
+      <span class="avatar" id="pillAvatar">S</span>
+      <span class="pill-text"><small>Swiping as</small><strong id="pillName">Sachin</strong></span>
+    </button>
+    <div class="seg" id="genderSeg" role="tablist" aria-label="Filter names">
+      <button data-g="boy" class="seg-btn boy" type="button">Boys</button>
+      <button data-g="girl" class="seg-btn girl" type="button">Girls</button>
+      <button data-g="all" class="seg-btn is-active" type="button">Both</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- SWIPE -->
+    <section class="view is-active" id="view-swipe">
+      <div class="deck-wrap">
+        <div class="deck" id="deck"></div>
+        <div class="empty" id="deckEmpty" hidden>
+          <div class="empty-emoji">✓</div>
+          <h2>That's the lot</h2>
+          <p id="emptyMsg">You have been through every name in this filter.</p>
+          <button class="btn ghost" id="btnResetDeck" type="button">Swipe these again</button>
+        </div>
+      </div>
+      <div class="actions" id="actions">
+        <button class="circle pass" id="btnPass" type="button" aria-label="Pass">✕</button>
+        <button class="circle undo" id="btnUndo" type="button" aria-label="Undo">↺</button>
+        <button class="circle like" id="btnLike" type="button" aria-label="Like">♥</button>
+      </div>
+      <p class="counter" id="counter"></p>
+    </section>
+
+    <!-- MATCHES -->
+    <section class="view" id="view-matches">
+      <div class="scroll">
+        <div class="section-head">
+          <h2>Matches</h2>
+          <p class="sub" id="matchSub">Names you both swiped right on.</p>
+        </div>
+        <div id="matchList" class="cards"></div>
+        <div class="section-head">
+          <h2>Only one of you</h2>
+          <p class="sub">Liked by one, still worth a conversation.</p>
+        </div>
+        <div id="soloList" class="cards"></div>
+      </div>
+    </section>
+
+    <!-- LIST -->
+    <section class="view" id="view-list">
+      <div class="scroll">
+        <div class="list-tools">
+          <input type="search" id="search" placeholder="Search name, origin or meaning" />
+          <button class="btn small" id="btnAddOpen" type="button">+ Add</button>
+        </div>
+        <div class="chips" id="chips">
+          <button class="chip is-active" data-f="all" type="button">All</button>
+          <button class="chip" data-f="boy" type="button">Boys</button>
+          <button class="chip" data-f="girl" type="button">Girls</button>
+          <button class="chip" data-f="shortlist" type="button">On our sheet</button>
+          <button class="chip" data-f="blend" type="button">Family blends</button>
+          <button class="chip" data-f="custom" type="button">Added by us</button>
+        </div>
+        <div id="fullList" class="rows"></div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="view-settings">
+      <div class="scroll">
+        <div class="section-head"><h2>Who is swiping?</h2><p class="sub">Pick a profile. Every swipe is saved against it.</p></div>
+        <div class="profile-cards" id="profileCards"></div>
+
+        <div class="section-head"><h2>Deck</h2></div>
+        <div class="panel">
+          <label class="row-toggle"><span>Shuffle the deck</span><input type="checkbox" id="optShuffle" /></label>
+          <label class="row-toggle"><span>Hide names the other profile passed</span><input type="checkbox" id="optHidePassed" /></label>
+          <button class="btn ghost full" id="btnResetProfile" type="button">Reset this profile's swipes</button>
+        </div>
+
+        <div class="section-head"><h2>Sync</h2><p class="sub">Keeps both phones on the same list.</p></div>
+        <div class="panel">
+          <p class="sync-status" id="syncStatus" data-s="off">Not syncing.</p>
+          <button class="btn ghost full" id="btnSyncNow" type="button">Check for changes now</button>
+        </div>
+
+        <div class="section-head"><h2>Data</h2></div>
+        <div class="panel">
+          <button class="btn ghost full" id="btnExport" type="button">Export everything as CSV</button>
+          <button class="btn danger full" id="btnWipe" type="button">Clear all app data</button>
+          <p class="note">Everything lives in this browser only. Install the app from your browser menu to keep it on your home screen.</p>
+        </div>
+        <p class="version">Name Swipe v1.1.0</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs">
+    <button class="tab is-active" data-view="swipe" type="button"><span>⇆</span>Swipe</button>
+    <button class="tab" data-view="matches" type="button"><span>♥</span>Matches<i class="badge" id="matchBadge" hidden></i></button>
+    <button class="tab" data-view="list" type="button"><span>☰</span>List</button>
+    <button class="tab" data-view="settings" type="button"><span>⚙</span>Settings</button>
+  </nav>
+</div>
+
+<div class="sheet" id="addSheet" hidden>
+  <div class="sheet-inner">
+    <h3>Add a name</h3>
+    <label>Name<input id="addName" type="text" autocomplete="off" /></label>
+    <label>Origin<input id="addOrigin" type="text" placeholder="Sanskrit, Tamil, a place..." /></label>
+    <label>Meaning<textarea id="addMeaning" rows="2"></textarea></label>
+    <div class="seg sheet-seg" id="addGender">
+      <button data-g="boy" class="seg-btn boy is-active" type="button">Boy</button>
+      <button data-g="girl" class="seg-btn girl" type="button">Girl</button>
+    </div>
+    <div class="sheet-actions">
+      <button class="btn ghost" id="addCancel" type="button">Cancel</button>
+      <button class="btn" id="addSave" type="button">Add to deck</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="vendor/supabase.js"></script>
+<script src="config.js"></script>
+<script src="data/names.js"></script>
+<script src="sync.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
