@@ -1,4 +1,4 @@
-var CACHE = 'name-swipe-v1.5.0';
+var CACHE = 'name-swipe-v1.7.0';
 var ASSETS = [
   './', './index.html', './styles.css', './app.js', './sync.js', './config.js',
   './vendor/supabase.js', './data/names.js',

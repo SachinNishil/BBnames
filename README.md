@@ -32,7 +32,7 @@ and iOS Safari offers "Add to Home Screen".
 | `MIGRATE-v1.2.sql` | Run once in Supabase when moving to v1.2 |
 | `MIGRATE-v1.3.sql` | Run once in Supabase when moving to v1.3 |
 
-v1.4 and v1.5 need no migration.
+v1.4 through v1.7 need no migration.
 | `config.js` | Your Supabase URL and anon key |
 | `supabase-setup.sql` | Run once in Supabase to create the tables |
 | `SETUP-SYNC.md` | Step by step guide to turning sync on |
@@ -49,15 +49,26 @@ Every name carries a `tag`:
 - `shortlist` — came off your sheet, shown with a gold "Already on our list" badge
 - `new` — added in this build
 - `blend` — made from Sachin, Nishil, Menaka, Sukumar, Thulasi, Ranjit and Amudha
+- `world` — rooted outside India but easy on an Indian tongue, terracotta badge
+- `kerala` — Malayalam rooted, including Mappila and Christian Kerala names, green badge
 - `custom` — added from inside the app
 
 Boys render blue, girls render pink, everywhere in the app.
 
-As of v1.5 the deck holds 505 names: 251 boys and 254 girls. Beyond Sanskrit and
+As of v1.7 the deck holds 805 names: 401 boys and 404 girls. Beyond Sanskrit and
 Tamil it draws on Malayalam, Kannada, Telugu, Bengali, Odia, Marathi, Gujarati,
 Punjabi, Kashmiri, Assamese, Naga, Ladakhi and Himachali, plus Persian and
 Arabic as they are used in India. 55 of them are place names, rivers, valleys,
 hill towns and forts, and 15 come from ragas.
+
+v1.6 added 200 more under the `world` tag, 100 per gender, with roots outside
+India: Italian, Greek, Latin, Persian, Turkish, Armenian, Slavic, Nordic,
+Finnish, Irish, Welsh, Hebrew, Arabic, Swahili, Yoruba, Japanese, Vietnamese
+and others, plus clipped place names in the same vein. They are chosen to sit
+naturally in an Indian mouth rather than to sound foreign.
+
+v1.7 added 100 Malayalam rooted names, 50 per gender, covering the everyday
+Kerala register, Mappila names and Christian Kerala names.
 
 ## Storage and sync
 
@@ -102,11 +113,27 @@ find out where you agree in Matches, not while you are deciding. The old
 
 ## Filtering matches
 
+Matches has its own search box. It filters both the matches list and the
+"only one of you" list, across name, origin and meaning, and it works inside
+whichever chip is active.
+
 Gender comes from the Boys / Girls / Both control in the top bar, which now
 filters the deck and the matches list. The chips under the Matches heading are
-about the choices instead: both starred, each person's own stars, liked but not
-starred, and names that have comments. The chip labels carry the live profile
-names.
+about the choices instead.
+
+"All stars, grouped" is the important one. It leaves the match list behind and
+gathers every name either of you starred, split by what the other person did:
+
+- Starred by both
+- Starred by one, liked by the other
+- Starred by one, passed by the other
+- Starred, the other has not seen it yet
+
+That third group is the point. A star against a pass is not a match, so it
+would otherwise sit unnoticed in the "only one of you" list. The rest of the
+chips are simple filters over the matches: both starred, each person's own
+stars, liked but not starred, and names carrying comments. Chip labels pick up
+the live profile names.
 
 ## Why swiping is fast
 

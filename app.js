@@ -173,6 +173,8 @@
   function tagLabel(n) {
     if (n.tag === 'shortlist') return 'On our list';
     if (n.tag === 'blend') return 'Family blend';
+    if (n.tag === 'world') return 'World roots';
+    if (n.tag === 'kerala') return 'Malayalam';
     if (n.tag === 'custom') return 'Added by us';
     return '';
   }
@@ -350,6 +352,7 @@
   function renderMatchChips() {
     var chips = [
       ['all', 'All'],
+      ['star', '★ All stars, grouped'],
       ['dstar', '★★ Both starred'],
       ['mystar', '★ ' + profileName(state.active) + '’s stars'],
       ['theirstar', '★ ' + profileName(other(state.active)) + '’s stars'],
@@ -368,20 +371,80 @@
     renderMatchChips();
     renderMatches();
   });
+  function matchQuery() {
+    return ($('#matchSearch').value || '').trim().toLowerCase();
+  }
+  function hits(n, q) {
+    if (state.gender !== 'all' && n.gender !== state.gender) return false;
+    if (!q) return true;
+    return (n.name + ' ' + (n.origin || '') + ' ' + (n.meaning || '')).toLowerCase().indexOf(q) > -1;
+  }
+  function group(title, note, rows) {
+    if (!rows.length) return '';
+    return '<div class="group-head"><b>' + esc(title) + '</b>' +
+      (note ? '<span>' + esc(note) + '</span>' : '') + '</div>' +
+      rows.map(function (n) { return rowHtml(n, true); }).join('');
+  }
+  function byName(a, b) { return a.name < b.name ? -1 : 1; }
+
+  // Every way a star can land, so nothing a star touched gets lost.
+  function starGroups(q) {
+    var me = state.active, them = other(state.active);
+    var both = [], withLike = [], withPass = [], unseen = [];
+    allNames().forEach(function (n) {
+      if (!hits(n, q)) return;
+      var a = vote1(n), b = vote2(n);
+      if (a !== 'super' && b !== 'super') return;
+      if (a === 'super' && b === 'super') { both.push(n); return; }
+      var their = a === 'super' ? b : a;
+      if (their === 'super' || their === 'like') withLike.push(n);
+      else if (their === 'pass') withPass.push(n);
+      else unseen.push(n);
+    });
+    [both, withLike, withPass, unseen].forEach(function (g) { g.sort(byName); });
+    return { both: both, withLike: withLike, withPass: withPass, unseen: unseen,
+             total: both.length + withLike.length + withPass.length + unseen.length };
+  }
+
+  function renderStarred(q) {
+    var g = starGroups(q);
+    var p1 = profileName('p1'), p2 = profileName('p2');
+    $('#matchList').innerHTML = g.total
+      ? group('Starred by both', p1 + ' and ' + p2 + ' both starred these', g.both) +
+        group('Starred by one, liked by the other', 'Close. One of you went further', g.withLike) +
+        group('Starred by one, passed by the other', 'Worth talking about', g.withPass) +
+        group('Starred, not yet seen', 'Waiting on the other one', g.unseen)
+      : '<p class="hint">' + (q ? 'Nothing starred matches that search.' : 'No stars yet.') + '</p>';
+    $('#soloHead').hidden = true;
+    $('#soloList').hidden = true;
+    $('#matchHead').textContent = g.total + (g.total === 1 ? ' starred name' : ' starred names');
+    $('#matchSub').textContent = g.both.length
+      ? g.both.length + ' of them starred by both of you.'
+      : 'Every name either of you starred, grouped by what the other said.';
+  }
+
   function renderMatches() {
     matchesDirty = false;
+    var q = matchQuery();
     var me = state.active, them = other(state.active);
+
+    if (matchFilter === 'star') { renderStarred(q); updateBadge(); return; }
+    $('#soloHead').hidden = false;
+    $('#soloList').hidden = false;
+
     var matches = [], solo = [];
     allNames().forEach(function (n) {
-      if (state.gender !== 'all' && n.gender !== state.gender) return;
+      if (!hits(n, q)) return;
       var a = vote1(n), b = vote2(n);
       if (liked(a) && liked(b)) matches.push(n);
       else if (liked(a) || liked(b)) solo.push(n);
     });
     matches.sort(function (a, b) {
       var d = starCount(b) - starCount(a);
-      return d || (a.name < b.name ? -1 : 1);
+      return d || byName(a, b);
     });
+    solo.sort(byName);
+
     var shown = matches.filter(function (n) {
       if (matchFilter === 'dstar') return starCount(n) === 2;
       if (matchFilter === 'mystar') return (state.votes[me] || {})[n.id] === 'super';
@@ -390,9 +453,11 @@
       if (matchFilter === 'commented') return commentsFor(n.id).length > 0;
       return true;
     });
+
     $('#matchList').innerHTML = shown.length
       ? shown.map(function (n) { return rowHtml(n, true); }).join('')
-      : '<p class="hint">' + (matches.length ? 'None in this filter.' : 'No matches yet. Keep swiping.') + '</p>';
+      : '<p class="hint">' + (q ? 'No match for that search.'
+          : matches.length ? 'None in this filter.' : 'No matches yet. Keep swiping.') + '</p>';
     $('#soloList').innerHTML = solo.length
       ? solo.map(function (n) { return rowHtml(n, true); }).join('')
       : '<p class="hint">Nothing here yet.</p>';
@@ -401,8 +466,9 @@
     var any = matches.filter(function (n) { return starCount(n) > 0; }).length;
     $('#matchHead').textContent = matches.length ? matches.length + ' matches' : 'Matches';
     $('#matchSub').textContent = matches.length
-      ? (both ? both + ' starred by both of you.' : any ? any + ' starred by one of you.' : 'Tap any name to change your vote or leave a comment.')
-      : 'Names you both swipe right on land here.';
+      ? (both ? both + ' starred by both of you.' : any ? any + ' starred by one of you.'
+         : 'Tap any name to change your vote or leave a comment.')
+      : (q ? 'No match for that search.' : 'Names you both swipe right on land here.');
     updateBadge();
   }
 
@@ -653,6 +719,7 @@
   $('#listBack').addEventListener('click', closeTop);
   $('#detailBack').addEventListener('click', closeTop);
   $('#search').addEventListener('input', renderList);
+  $('#matchSearch').addEventListener('input', renderMatches);
   $$('#chips .chip').forEach(function (c) {
     c.addEventListener('click', function () {
       listFilter = c.dataset.f;

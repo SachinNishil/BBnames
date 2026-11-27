@@ -61,9 +61,10 @@
     <section class="view" id="view-matches">
       <div class="scroll">
         <div class="section-head"><h2 id="matchHead">Matches</h2><p class="sub" id="matchSub"></p></div>
+        <input type="search" id="matchSearch" placeholder="Search your matches" />
         <div class="chips" id="matchChips"></div>
         <div id="matchList" class="rows"></div>
-        <div class="section-head"><h2>Only one of you</h2><p class="sub">Liked by one. Worth a conversation.</p></div>
+        <div class="section-head" id="soloHead"><h2>Only one of you</h2><p class="sub">Liked by one. Worth a conversation.</p></div>
         <div id="soloList" class="rows"></div>
       </div>
     </section>
@@ -110,7 +111,7 @@
           <button class="btn danger full" id="btnWipe" type="button">Clear all app data</button>
           <p class="note">Install from your browser menu to keep it on your home screen.</p>
         </div>
-        <p class="version">Name Swipe v1.5.0</p>
+        <p class="version">Name Swipe v1.7.0</p>
       </div>
     </section>
   </main>
@@ -135,6 +136,8 @@
       <button class="chip" data-f="girl" type="button">Girls</button>
       <button class="chip" data-f="shortlist" type="button">On our sheet</button>
       <button class="chip" data-f="blend" type="button">Family blends</button>
+      <button class="chip" data-f="world" type="button">World roots</button>
+      <button class="chip" data-f="kerala" type="button">Malayalam</button>
       <button class="chip" data-f="custom" type="button">Added by us</button>
     </div>
     <div id="fullList" class="rows"></div>

@@ -74,6 +74,8 @@ main{flex:1 1 auto;position:relative;min-height:0}
 .tag.shortlist{background:var(--gold);color:#3A3027;transform:rotate(2deg)}
 .tag.blend{background:var(--violet);transform:rotate(2deg)}
 .tag.custom{background:var(--sage);transform:rotate(2deg)}
+.tag.world{background:var(--clay);transform:rotate(-2deg)}
+.tag.kerala{background:#9FCBBE;transform:rotate(2deg)}
 .card .name{font:600 clamp(42px,13vw,64px)/1 Fraunces;letter-spacing:-.025em;margin:auto 0 0}
 .card .origin{font:600 12px Outfit;letter-spacing:.1em;text-transform:uppercase;opacity:.72;margin:14px 0 0}
 .card .meaning{font:400 17px/1.45 Outfit;margin:9px 0 0;opacity:.95}
@@ -135,6 +137,12 @@ main{flex:1 1 auto;position:relative;min-height:0}
 .chip{white-space:nowrap;background:var(--card);border:var(--bw) solid var(--line);color:var(--ink);
   font:700 12.5px Outfit;padding:7px 13px;border-radius:999px;cursor:pointer}
 .chip.is-active{background:var(--gold);color:#3A3027;box-shadow:2px 2px 0 var(--line)}
+#matchSearch{width:100%;background:var(--card);border:var(--bw) solid var(--line);border-radius:14px;
+  color:var(--ink);padding:11px 14px;font:400 15px Outfit;margin:4px 0 10px}
+#matchSearch:focus{outline:none;box-shadow:2px 2px 0 var(--line)}
+.group-head{font:700 12px Outfit;letter-spacing:.03em;color:var(--ink-soft);padding:16px 0 9px;
+  display:flex;align-items:center;gap:8px}
+.group-head b{color:var(--ink);font-weight:800}
 #search{width:100%;background:var(--card);border:var(--bw) solid var(--line);border-radius:14px;
   color:var(--ink);padding:11px 14px;font:400 15px Outfit;margin-top:10px}
 #search:focus{outline:none;box-shadow:2px 2px 0 var(--line)}
