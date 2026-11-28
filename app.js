@@ -20,6 +20,15 @@
 
   var state = load();
   var undoStack = [];
+  /* Votes we have made but not yet seen come back from the database.
+     If a pull arrives without one, the write was lost somewhere: keep ours,
+     push it again, and only give up after a few tries. Without this, a single
+     dropped write puts that name back in the deck and it cycles forever. */
+  var unconfirmed = {};
+  function markUnconfirmed(pid, id, verdict) {
+    unconfirmed[pid + '|' + id] = { pid: pid, id: id, verdict: verdict, tries: 0 };
+  }
+  function forgetUnconfirmed(pid, id) { delete unconfirmed[pid + '|' + id]; }
   var pool = [];
   var detailId = null;
 
@@ -278,6 +287,7 @@
     var had = (state.votes[state.active] || {})[id];
     state.votes[state.active][id] = verdict;
     if (track) undoStack.push({ profile: state.active, id: id, was: had });
+    markUnconfirmed(state.active, id, verdict);
     saveSoon();
     if (window.Sync) Sync.pushVote(state.active, id, verdict);
     touchMatches();
@@ -300,8 +310,8 @@
   function undo() {
     var last = undoStack.pop();
     if (!last) { toast('Nothing to undo'); return; }
-    if (last.was) state.votes[last.profile][last.id] = last.was;
-    else delete state.votes[last.profile][last.id];
+    if (last.was) { state.votes[last.profile][last.id] = last.was; markUnconfirmed(last.profile, last.id, last.was); }
+    else { delete state.votes[last.profile][last.id]; forgetUnconfirmed(last.profile, last.id); }
     save();
     if (window.Sync) {
       if (last.was) Sync.pushVote(last.profile, last.id, last.was);
@@ -574,8 +584,9 @@
     $$('#detailBody .vote-btn').forEach(function (b) {
       b.addEventListener('click', function () {
         var v = b.dataset.v;
-        if (mine === v) { 
+        if (mine === v) {
           delete state.votes[state.active][n.id];
+          forgetUnconfirmed(state.active, n.id);
           save();
           if (window.Sync) Sync.clearVote(state.active, n.id);
           renderMatches();
@@ -751,6 +762,9 @@
 
   function resetActive() {
     state.votes[state.active] = {}; save(); undoStack = [];
+    Object.keys(unconfirmed).forEach(function (k) {
+      if (unconfirmed[k].pid === state.active) delete unconfirmed[k];
+    });
     if (window.Sync) Sync.resetProfile(state.active);
     buildPool(); renderDeck(); renderMatches(); renderProfiles();
   }
@@ -847,7 +861,17 @@
     var before = matchIds();
     var topId = pool.length ? pool[0].id : null;
 
-    state.votes = { p1: d.votes.p1 || {}, p2: d.votes.p2 || {} };
+    var incoming = { p1: d.votes.p1 || {}, p2: d.votes.p2 || {} };
+    Object.keys(unconfirmed).forEach(function (k) {
+      var u = unconfirmed[k];
+      if ((incoming[u.pid] || {})[u.id] === u.verdict) { delete unconfirmed[k]; return; }
+      u.tries++;
+      if (u.tries > 3) { delete unconfirmed[k]; return; }
+      if (!incoming[u.pid]) incoming[u.pid] = {};
+      incoming[u.pid][u.id] = u.verdict;            // ours stands until confirmed
+      if (window.Sync && Sync.on) Sync.pushVote(u.pid, u.id, u.verdict);
+    });
+    state.votes = incoming;
     state.custom = d.custom || [];
     invalidateOrder();
     if (d.comments) state.comments = d.comments;

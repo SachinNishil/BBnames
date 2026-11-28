@@ -165,6 +165,25 @@ without stars, one yes and one no, passed by both, waiting on each of you,
 neither has seen, and names carrying comments. Chip labels pick up the live
 profile names.
 
+## Why a swipe never comes back
+
+Two layers, because this went wrong once.
+
+In `sync.js`, a flush removes only the entries that actually uploaded, and it
+removes them from the queue as it stands when the flush finishes. The earlier
+version replaced the whole queue, so anything added mid-flight was discarded.
+The next pull then found no record of those swipes and put the names back in
+the deck, which is why a handful of names cycled round forever.
+
+In `app.js`, every vote is held in `unconfirmed` until it comes back from the
+database. If a pull arrives without it, the app keeps its own answer, pushes it
+again, and gives up only after three tries. So even a write that fails silently
+cannot revert the deck.
+
+Both are covered by the harness in the notes below: a control build cycles
+names, the current build does not, including when one write in three is thrown
+away.
+
 ## Why swiping is fast
 
 Three things, all local first.
