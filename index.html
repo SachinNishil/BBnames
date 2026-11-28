@@ -105,13 +105,18 @@
           <button class="btn ghost full" id="btnSyncNow" type="button">Check for changes now</button>
         </div>
 
+        <div class="section-head"><h2>About</h2></div>
+        <div class="panel">
+          <button class="btn ghost full" id="btnHistory" type="button">Version history</button>
+        </div>
+
         <div class="section-head"><h2>Data</h2></div>
         <div class="panel">
           <button class="btn ghost full" id="btnExport" type="button">Export everything as CSV</button>
           <button class="btn danger full" id="btnWipe" type="button">Clear all app data</button>
           <p class="note">Install from your browser menu to keep it on your home screen.</p>
         </div>
-        <p class="version">Name Swipe v1.7.0</p>
+        <p class="version" id="versionLine">Name Swipe</p>
       </div>
     </section>
   </main>
@@ -138,10 +143,20 @@
       <button class="chip" data-f="blend" type="button">Family blends</button>
       <button class="chip" data-f="world" type="button">World roots</button>
       <button class="chip" data-f="kerala" type="button">Malayalam</button>
+      <button class="chip" data-f="middle" type="button">Middle ground</button>
       <button class="chip" data-f="custom" type="button">Added by us</button>
     </div>
     <div id="fullList" class="rows"></div>
   </div>
+</section>
+
+<!-- version history -->
+<section class="panel-over" id="historyPanel" hidden>
+  <header class="over-bar">
+    <button class="back" id="historyBack" type="button" aria-label="Back">←</button>
+    <h2>Version history</h2>
+  </header>
+  <div class="scroll" id="historyBody"></div>
 </section>
 
 <!-- name detail: change your vote, read and add comments -->
@@ -179,6 +194,7 @@
 <script src="vendor/supabase.js"></script>
 <script src="config.js"></script>
 <script src="data/names.js"></script>
+<script src="data/changelog.js"></script>
 <script src="sync.js"></script>
 <script src="app.js"></script>
 </body>

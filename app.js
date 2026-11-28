@@ -96,6 +96,7 @@
       view: currentView,
       list: $('#listPanel').hidden === false,
       detail: $('#detailPanel').hidden === false ? detailId : null,
+      history: $('#historyPanel').hidden === false,
       add: $('#addSheet').hidden === false
     };
   }
@@ -104,6 +105,8 @@
     try { history.pushState({ n: navStack.length }, ''); } catch (e) {}
   }
   function restore(s) {
+    $('#historyPanel').hidden = !s.history;
+    if (s.history) renderHistory();
     $('#addSheet').hidden = !s.add;
     $('#listPanel').hidden = !s.list;
     if (s.detail) { detailId = s.detail; renderDetail(); $('#detailPanel').hidden = false; }
@@ -175,6 +178,7 @@
     if (n.tag === 'blend') return 'Family blend';
     if (n.tag === 'world') return 'World roots';
     if (n.tag === 'kerala') return 'Malayalam';
+    if (n.tag === 'middle') return 'Middle ground';
     if (n.tag === 'custom') return 'Added by us';
     return '';
   }
@@ -379,96 +383,142 @@
     if (!q) return true;
     return (n.name + ' ' + (n.origin || '') + ' ' + (n.meaning || '')).toLowerCase().indexOf(q) > -1;
   }
-  function group(title, note, rows) {
+  function byName(a, b) { return a.name < b.name ? -1 : 1; }
+  function v(pid, n) { return (state.votes[pid] || {})[n.id]; }
+
+  /* Every lens over the two sets of votes. A lens either filters flat, or
+     gathers a base set and groups it by what the other person said. */
+  function lenses() {
+    var p1 = profileName('p1'), p2 = profileName('p2');
+    return [
+      { id: 'all', label: 'All matches',
+        test: function (n) { return liked(v('p1', n)) && liked(v('p2', n)); } },
+      { id: 'dstar', label: '\u2605\u2605 Both starred',
+        test: function (n) { return v('p1', n) === 'super' && v('p2', n) === 'super'; } },
+
+      { id: 'star1', label: '\u2605 ' + p1 + ' starred', group: 'p1',
+        test: function (n) { return v('p1', n) === 'super'; } },
+      { id: 'star2', label: '\u2605 ' + p2 + ' starred', group: 'p2',
+        test: function (n) { return v('p2', n) === 'super'; } },
+      { id: 'like1', label: '\u2665 ' + p1 + ' said yes', group: 'p1',
+        test: function (n) { return liked(v('p1', n)); } },
+      { id: 'like2', label: '\u2665 ' + p2 + ' said yes', group: 'p2',
+        test: function (n) { return liked(v('p2', n)); } },
+
+      { id: 'plain', label: 'Liked by both, no stars',
+        test: function (n) { return liked(v('p1', n)) && liked(v('p2', n)) && starCount(n) === 0; } },
+      { id: 'split', label: 'One yes, one no',
+        test: function (n) {
+          var a = v('p1', n), b = v('p2', n);
+          return (liked(a) && b === 'pass') || (liked(b) && a === 'pass');
+        } },
+      { id: 'bothpass', label: 'Passed by both',
+        test: function (n) { return v('p1', n) === 'pass' && v('p2', n) === 'pass'; } },
+
+      { id: 'wait1', label: 'Waiting on ' + p1,
+        test: function (n) { return !v('p1', n) && !!v('p2', n); } },
+      { id: 'wait2', label: 'Waiting on ' + p2,
+        test: function (n) { return !v('p2', n) && !!v('p1', n); } },
+      { id: 'untouched', label: 'Neither has seen',
+        test: function (n) { return !v('p1', n) && !v('p2', n); } },
+
+      { id: 'commented', label: '\uD83D\uDCAC Has comments',
+        test: function (n) { return commentsFor(n.id).length > 0; } }
+    ];
+  }
+  function currentLens() {
+    var all = lenses();
+    for (var i = 0; i < all.length; i++) if (all[i].id === matchFilter) return all[i];
+    return all[0];
+  }
+
+  function renderMatchChips() {
+    $('#matchChips').innerHTML = lenses().map(function (c) {
+      return '<button class="chip ' + (matchFilter === c.id ? 'is-active' : '') +
+        '" data-m="' + c.id + '" type="button">' + esc(c.label) + '</button>';
+    }).join('');
+  }
+  $('#matchChips').addEventListener('click', function (e) {
+    var c = e.target.closest && e.target.closest('.chip');
+    if (!c) return;
+    matchFilter = c.dataset.m;
+    renderMatchChips();
+    renderMatches();
+  });
+
+  function section(title, note, rows) {
     if (!rows.length) return '';
     return '<div class="group-head"><b>' + esc(title) + '</b>' +
       (note ? '<span>' + esc(note) + '</span>' : '') + '</div>' +
       rows.map(function (n) { return rowHtml(n, true); }).join('');
   }
-  function byName(a, b) { return a.name < b.name ? -1 : 1; }
 
-  // Every way a star can land, so nothing a star touched gets lost.
-  function starGroups(q) {
-    var me = state.active, them = other(state.active);
-    var both = [], withLike = [], withPass = [], unseen = [];
+  /* Grouped lens: everything in the base set, best response first. */
+  function renderGrouped(lens, q) {
+    var mine = lens.group, theirs = other(mine);
+    var who = profileName(theirs);
+    var g = { super: [], like: [], pass: [], none: [] };
     allNames().forEach(function (n) {
-      if (!hits(n, q)) return;
-      var a = vote1(n), b = vote2(n);
-      if (a !== 'super' && b !== 'super') return;
-      if (a === 'super' && b === 'super') { both.push(n); return; }
-      var their = a === 'super' ? b : a;
-      if (their === 'super' || their === 'like') withLike.push(n);
-      else if (their === 'pass') withPass.push(n);
-      else unseen.push(n);
+      if (!hits(n, q) || !lens.test(n)) return;
+      var t = v(theirs, n);
+      g[t === 'super' ? 'super' : t === 'like' ? 'like' : t === 'pass' ? 'pass' : 'none'].push(n);
     });
-    [both, withLike, withPass, unseen].forEach(function (g) { g.sort(byName); });
-    return { both: both, withLike: withLike, withPass: withPass, unseen: unseen,
-             total: both.length + withLike.length + withPass.length + unseen.length };
-  }
+    ['super', 'like', 'pass', 'none'].forEach(function (k) { g[k].sort(byName); });
+    var total = g.super.length + g.like.length + g.pass.length + g.none.length;
 
-  function renderStarred(q) {
-    var g = starGroups(q);
-    var p1 = profileName('p1'), p2 = profileName('p2');
-    $('#matchList').innerHTML = g.total
-      ? group('Starred by both', p1 + ' and ' + p2 + ' both starred these', g.both) +
-        group('Starred by one, liked by the other', 'Close. One of you went further', g.withLike) +
-        group('Starred by one, passed by the other', 'Worth talking about', g.withPass) +
-        group('Starred, not yet seen', 'Waiting on the other one', g.unseen)
-      : '<p class="hint">' + (q ? 'Nothing starred matches that search.' : 'No stars yet.') + '</p>';
+    $('#matchList').innerHTML = total
+      ? section(who + ' starred it too', 'The strongest agreement you have', g.super) +
+        section(who + ' liked it', 'Agreed, one of you more than the other', g.like) +
+        section(who + ' passed on it', 'Worth talking about', g.pass) +
+        section(who + ' has not seen it yet', 'Still waiting', g.none)
+      : '<p class="hint">' + (q ? 'Nothing here matches that search.' : 'Nothing here yet.') + '</p>';
     $('#soloHead').hidden = true;
     $('#soloList').hidden = true;
-    $('#matchHead').textContent = g.total + (g.total === 1 ? ' starred name' : ' starred names');
-    $('#matchSub').textContent = g.both.length
-      ? g.both.length + ' of them starred by both of you.'
-      : 'Every name either of you starred, grouped by what the other said.';
+    $('#matchHead').textContent = total + ' ' + (total === 1 ? 'name' : 'names');
+    $('#matchSub').textContent = lens.label.replace(/^[^A-Za-z]+/, '') +
+      ', grouped by what ' + who + ' said.';
   }
 
   function renderMatches() {
     matchesDirty = false;
     var q = matchQuery();
-    var me = state.active, them = other(state.active);
+    var lens = currentLens();
 
-    if (matchFilter === 'star') { renderStarred(q); updateBadge(); return; }
-    $('#soloHead').hidden = false;
-    $('#soloList').hidden = false;
+    if (lens.group) { renderGrouped(lens, q); updateBadge(); return; }
 
-    var matches = [], solo = [];
+    var rows = [], solo = [];
     allNames().forEach(function (n) {
       if (!hits(n, q)) return;
-      var a = vote1(n), b = vote2(n);
-      if (liked(a) && liked(b)) matches.push(n);
-      else if (liked(a) || liked(b)) solo.push(n);
+      if (lens.test(n)) rows.push(n);
+      if (lens.id === 'all') {
+        var a = v('p1', n), b = v('p2', n);
+        if (!(liked(a) && liked(b)) && (liked(a) || liked(b))) solo.push(n);
+      }
     });
-    matches.sort(function (a, b) {
-      var d = starCount(b) - starCount(a);
-      return d || byName(a, b);
-    });
+    rows.sort(function (a, b) { return starCount(b) - starCount(a) || byName(a, b); });
     solo.sort(byName);
 
-    var shown = matches.filter(function (n) {
-      if (matchFilter === 'dstar') return starCount(n) === 2;
-      if (matchFilter === 'mystar') return (state.votes[me] || {})[n.id] === 'super';
-      if (matchFilter === 'theirstar') return (state.votes[them] || {})[n.id] === 'super';
-      if (matchFilter === 'plain') return starCount(n) === 0;
-      if (matchFilter === 'commented') return commentsFor(n.id).length > 0;
-      return true;
-    });
+    var showSolo = lens.id === 'all';
+    $('#soloHead').hidden = !showSolo;
+    $('#soloList').hidden = !showSolo;
+    if (showSolo) {
+      $('#soloList').innerHTML = solo.length
+        ? solo.map(function (n) { return rowHtml(n, true); }).join('')
+        : '<p class="hint">Nothing here yet.</p>';
+    }
 
-    $('#matchList').innerHTML = shown.length
-      ? shown.map(function (n) { return rowHtml(n, true); }).join('')
-      : '<p class="hint">' + (q ? 'No match for that search.'
-          : matches.length ? 'None in this filter.' : 'No matches yet. Keep swiping.') + '</p>';
-    $('#soloList').innerHTML = solo.length
-      ? solo.map(function (n) { return rowHtml(n, true); }).join('')
-      : '<p class="hint">Nothing here yet.</p>';
+    $('#matchList').innerHTML = rows.length
+      ? rows.map(function (n) { return rowHtml(n, true); }).join('')
+      : '<p class="hint">' + (q ? 'No match for that search.' : 'Nothing in this filter yet.') + '</p>';
 
-    var both = matches.filter(function (n) { return starCount(n) === 2; }).length;
-    var any = matches.filter(function (n) { return starCount(n) > 0; }).length;
-    $('#matchHead').textContent = matches.length ? matches.length + ' matches' : 'Matches';
-    $('#matchSub').textContent = matches.length
-      ? (both ? both + ' starred by both of you.' : any ? any + ' starred by one of you.'
-         : 'Tap any name to change your vote or leave a comment.')
-      : (q ? 'No match for that search.' : 'Names you both swipe right on land here.');
+    var stars = rows.filter(function (n) { return starCount(n) > 0; }).length;
+    $('#matchHead').textContent = lens.id === 'all'
+      ? (rows.length ? rows.length + ' matches' : 'Matches')
+      : rows.length + ' ' + (rows.length === 1 ? 'name' : 'names');
+    $('#matchSub').textContent = lens.id === 'all'
+      ? (rows.length ? (stars ? stars + ' of them starred.' : 'Tap any name to change your vote or leave a comment.')
+         : 'Names you both swipe right on land here.')
+      : lens.label.replace(/^[^A-Za-z]+/, '') + '.';
     updateBadge();
   }
 
@@ -566,6 +616,29 @@
     if ($('#listPanel').hidden === false) renderList();
   });
 
+  /* ---------- version history ---------- */
+  function appVersion() {
+    var log = window.CHANGELOG || [];
+    return log.length ? log[0].version : '';
+  }
+  function renderHistory() {
+    var log = window.CHANGELOG || [];
+    if (!log.length) { $('#historyBody').innerHTML = '<p class="hint">No history recorded.</p>'; return; }
+    $('#historyBody').innerHTML = log.map(function (v, i) {
+      var when = v.date;
+      try {
+        when = new Date(v.date + 'T00:00:00').toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' });
+      } catch (e) {}
+      return '<div class="ver ' + (i === 0 ? 'now' : '') + '">' +
+        '<div class="ver-top"><span class="ver-no">v' + esc(v.version) + '</span>' +
+        (i === 0 ? '<span class="ver-now">You are here</span>' : '') +
+        '<span class="ver-date">' + esc(when) + '</span></div>' +
+        '<div class="ver-title">' + esc(v.title) + '</div>' +
+        '<ul>' + (v.changes || []).map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul>' +
+        '</div>';
+    }).join('');
+  }
+
   /* ---------- settings ---------- */
   function renderProfiles() {
     var c = $('#profileCards');
@@ -659,7 +732,8 @@
   $('#btnUndo').addEventListener('click', undo);
   document.addEventListener('keydown', function (e) {
     if (currentView !== 'swipe') return;
-    if ($('#listPanel').hidden === false || $('#addSheet').hidden === false || $('#detailPanel').hidden === false) return;
+    if ($('#listPanel').hidden === false || $('#addSheet').hidden === false ||
+        $('#detailPanel').hidden === false || $('#historyPanel').hidden === false) return;
     if (/input|textarea/i.test(e.target.tagName || '')) return;
     if (e.key === 'ArrowRight') swipeTop('like');
     if (e.key === 'ArrowLeft') swipeTop('pass');
@@ -713,6 +787,10 @@
     undoStack = []; save(); boot(); toast('All data cleared');
   });
 
+  $('#btnHistory').addEventListener('click', function () {
+    openOverlay(function () { renderHistory(); $('#historyPanel').hidden = false; });
+  });
+  $('#historyBack').addEventListener('click', closeTop);
   $('#btnOpenList').addEventListener('click', function () {
     openOverlay(function () { $('#listPanel').hidden = false; renderList(); });
   });
@@ -855,6 +933,7 @@
 
   function boot() {
     applyTheme();
+    $('#versionLine').textContent = 'Name Swipe v' + appVersion();
     $$('#genderSeg .seg-btn').forEach(function (x) { x.classList.toggle('is-active', x.dataset.g === state.gender); });
     renderPill(); renderProfiles(); buildPool(); renderDeck();
     renderMatchChips(); renderMatches();

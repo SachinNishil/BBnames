@@ -22,8 +22,10 @@
   }
   // Queue locally and push a moment later, so a fast run of swipes goes up as
   // one batch instead of one network round trip per card.
+  var uidSeed = Date.now();
   function enqueue(op) {
     if (!S.client) return;
+    op.uid = (uidSeed++).toString(36);
     var q = queue(); q.push(op); setQueue(q);
     setStatus('pending');
     nudge();
@@ -62,22 +64,41 @@
     return Promise.resolve({});
   }
 
+  // Only the ops that actually went up are removed, and they are removed from
+  // the queue as it stands when the flush finishes. Anything enqueued while
+  // this was in flight survives. Dropping those used to lose the swipe, and the
+  // next pull would then hand the name back to the deck.
   function flush() {
-    var q = queue();
-    if (!q.length) return Promise.resolve(true);
-    var left = [];
+    var batch = queue();
+    if (!batch.length) return Promise.resolve(true);
+    var done = {};
     var chain = Promise.resolve();
-    q.forEach(function (op) {
+    batch.forEach(function (op) {
       chain = chain.then(function () {
         return apply(op).then(function (r) {
-          if (r && r.error) left.push(op);
-        }).catch(function () { left.push(op); });
+          if (!(r && r.error)) done[op.uid] = true;
+        }).catch(function () {});
       });
     });
     return chain.then(function () {
-      setQueue(left);
-      return left.length === 0;
+      var now = queue().filter(function (op) { return !done[op.uid]; });
+      setQueue(now);
+      return now.length === 0;
     });
+  }
+
+  // Votes still waiting to go up. A pull must never undo them.
+  function pendingVotes() {
+    var out = { p1: {}, p2: {} };
+    queue().forEach(function (op) {
+      if (op.t === 'vote') {
+        if (!out[op.profile]) out[op.profile] = {};
+        out[op.profile][op.name] = op.verdict;   // null means cleared
+      } else if (op.t === 'reset') {
+        out[op.profile] = { __reset: true };
+      }
+    });
+    return out;
   }
 
   function pull() {
@@ -105,6 +126,18 @@
       (res[3] && res[3].data ? res[3].data : []).forEach(function (r) { settings[r.key] = r.value; });
       var comments = (res[4] && res[4].data ? res[4].data : []).map(function (r) {
         return { id: r.id, name_id: r.name_id, profile_id: r.profile_id, body: r.body, created_at: r.created_at };
+      });
+      // Lay anything still queued over the server's answer, so a swipe that
+      // has not been confirmed yet is never rolled back on screen.
+      var pend = pendingVotes();
+      Object.keys(pend).forEach(function (pid) {
+        if (pend[pid].__reset) votes[pid] = {};
+        Object.keys(pend[pid]).forEach(function (nid) {
+          if (nid === '__reset') return;
+          if (!votes[pid]) votes[pid] = {};
+          if (pend[pid][nid] === null) delete votes[pid][nid];
+          else votes[pid][nid] = pend[pid][nid];
+        });
       });
       if (S.h && S.h.onRemote) {
         S.h.onRemote({

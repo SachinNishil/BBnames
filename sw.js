@@ -1,7 +1,7 @@
-var CACHE = 'name-swipe-v1.7.0';
+var CACHE = 'name-swipe-v1.9.0';
 var ASSETS = [
   './', './index.html', './styles.css', './app.js', './sync.js', './config.js',
-  './vendor/supabase.js', './data/names.js',
+  './vendor/supabase.js', './data/names.js', './data/changelog.js',
   './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png',
   './icons/icon-512-maskable.png', './icons/icon-180.png'
 ];

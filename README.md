@@ -28,13 +28,40 @@ and iOS Safari offers "Add to Home Screen".
 | `styles.css` | Everything visual, including the blue and pink themes |
 | `app.js` | State, swipe gestures, matching, CSV export |
 | `data/names.js` | The name list, generated from the source sheet |
+| `data/changelog.js` | Version history, newest first; the app reads the current version from it |
 | `sync.js` | Supabase sync: queue, push, pull, live updates |
-| `MIGRATE-v1.2.sql` | Run once in Supabase when moving to v1.2 |
-| `MIGRATE-v1.3.sql` | Run once in Supabase when moving to v1.3 |
 
-v1.4 through v1.7 need no migration.
+v1.4 through v1.9 need no migration.
+
+## Shipping a version
+
+Three things move together:
+
+1. Add an entry at the top of `data/changelog.js`, newest first.
+2. Bump `CACHE` in `sw.js` to the same number.
+3. Push.
+
+The footer line in Settings and the Version history screen both read
+`CHANGELOG[0]`, so the version never has to be typed into the markup.
+
+## The supabase folder
+
+Anything that gets pasted into Supabase lives in `Core/supabase/` and nowhere
+else, so there is never a question about which files are code and which are
+database work.
+
+- `schema.sql` is the whole schema as it currently stands. It is for building a
+  fresh project in one go. Never run it against the live database.
+- `migrate-*.sql` are the individual changes, in order. Each one is run once.
+- `fix-permissions.sql` is a one off grant fix from early on.
+- `APPLIED.md` records which of them have actually been run.
+
+`sync-updates.py` reads `APPLIED.md`. Anything ticked there is listed in the
+upload batch as "commit only". Anything not ticked is listed under a heading
+that says to push it to Supabase. So the batch always tells you which of the
+two things a SQL file needs.
 | `config.js` | Your Supabase URL and anon key |
-| `supabase-setup.sql` | Run once in Supabase to create the tables |
+| `supabase/` | Everything that touches the database, see below |
 | `SETUP-SYNC.md` | Step by step guide to turning sync on |
 | `vendor/supabase.js` | The Supabase client, kept local so the app works offline |
 | `manifest.webmanifest` | PWA metadata |
@@ -51,11 +78,12 @@ Every name carries a `tag`:
 - `blend` — made from Sachin, Nishil, Menaka, Sukumar, Thulasi, Ranjit and Amudha
 - `world` — rooted outside India but easy on an Indian tongue, terracotta badge
 - `kerala` — Malayalam rooted, including Mappila and Christian Kerala names, green badge
+- `middle` — interfaith middle ground, Asian roots with Indian elements, sand badge
 - `custom` — added from inside the app
 
 Boys render blue, girls render pink, everywhere in the app.
 
-As of v1.7 the deck holds 805 names: 401 boys and 404 girls. Beyond Sanskrit and
+As of v1.9 the deck holds 905 names: 451 boys and 454 girls. Beyond Sanskrit and
 Tamil it draws on Malayalam, Kannada, Telugu, Bengali, Odia, Marathi, Gujarati,
 Punjabi, Kashmiri, Assamese, Naga, Ladakhi and Himachali, plus Persian and
 Arabic as they are used in India. 55 of them are place names, rivers, valleys,
@@ -69,6 +97,11 @@ naturally in an Indian mouth rather than to sound foreign.
 
 v1.7 added 100 Malayalam rooted names, 50 per gender, covering the everyday
 Kerala register, Mappila names and Christian Kerala names.
+
+v1.9 added 100 under the `middle` tag, 50 per gender: contemporary and
+international with Indian roots, drawing on Buddhist virtues (metta, karuna,
+mudita, upeksha), the Sanskrit derived names of Indonesia, Thailand, Cambodia,
+Burma and Sri Lanka, and Tibetan. Chosen to sit on neither side of a faith.
 
 ## Storage and sync
 
@@ -119,21 +152,18 @@ whichever chip is active.
 
 Gender comes from the Boys / Girls / Both control in the top bar, which now
 filters the deck and the matches list. The chips under the Matches heading are
-about the choices instead.
+about the choices instead. There are thirteen, covering every combination the
+two sets of votes can produce.
 
-"All stars, grouped" is the important one. It leaves the match list behind and
-gathers every name either of you starred, split by what the other person did:
+Four of them are lenses on one person: that person's stars, and that person's
+yes. Those show everything that person marked, not only the names that became
+matches, grouped by what the other person said: starred, then liked, then
+passed, then not seen yet.
 
-- Starred by both
-- Starred by one, liked by the other
-- Starred by one, passed by the other
-- Starred, the other has not seen it yet
-
-That third group is the point. A star against a pass is not a match, so it
-would otherwise sit unnoticed in the "only one of you" list. The rest of the
-chips are simple filters over the matches: both starred, each person's own
-stars, liked but not starred, and names carrying comments. Chip labels pick up
-the live profile names.
+The remaining chips are flat filters: all matches, both starred, liked by both
+without stars, one yes and one no, passed by both, waiting on each of you,
+neither has seen, and names carrying comments. Chip labels pick up the live
+profile names.
 
 ## Why swiping is fast
 

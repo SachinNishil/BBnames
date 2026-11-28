@@ -17,7 +17,7 @@ In the left sidebar, click "SQL Editor".
 
 Click "New query".
 
-Open `supabase-setup.sql` from this folder. Copy everything in it. Paste it in.
+Open `supabase/schema.sql` from this folder. Copy everything in it. Paste it in.
 
 Click "Run".
 
