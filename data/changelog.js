@@ -3,6 +3,17 @@
    CACHE string in sw.js together. */
 window.CHANGELOG = [
 {
+  "version": "1.9.1",
+  "date": "2026-11-28",
+  "title": "The real cause of the repeating names",
+  "changes": [
+    "Found it. Between the two of you there are now more than 1000 votes, and Supabase returns at most 1000 rows for a plain read. Every sync was handing the app a truncated list with no error, so every vote past the cap looked as though it had never been made and its name went back into the deck.",
+    "That is why it got worse as you swiped more, why it hit both of you, and why it never showed up in testing: the fault only begins at the thousandth vote.",
+    "Votes, names and comments are now read in pages until the last one comes back short, so the app always has the full set.",
+    "Reproduced against a stand-in with the same 1000 row cap: the old build received 500 of 600 votes and the count jumped back up after every swipe. The new build receives all of them and holds steady."
+  ]
+},
+{
   "version": "1.9.0",
   "date": "2026-11-28",
   "title": "Repeat bug fixed, every filter, 100 more names",
