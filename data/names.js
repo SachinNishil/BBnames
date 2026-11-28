@@ -6439,5 +6439,805 @@ window.NAMES = [
 "origin": "Malayalam",
 "meaning": "The dark moon",
 "tag": "kerala"
+},
+{
+"id": "bodhi-boy",
+"name": "Bodhi",
+"gender": "boy",
+"origin": "Pali",
+"meaning": "Awakening; the clarity that comes with it",
+"tag": "middle"
+},
+{
+"id": "sumedh-boy",
+"name": "Sumedh",
+"gender": "boy",
+"origin": "Pali / Sanskrit",
+"meaning": "Of good wisdom",
+"tag": "middle"
+},
+{
+"id": "khema-boy",
+"name": "Khema",
+"gender": "boy",
+"origin": "Pali",
+"meaning": "Safe, at ease, out of danger",
+"tag": "middle"
+},
+{
+"id": "nanda-boy",
+"name": "Nanda",
+"gender": "boy",
+"origin": "Pali / Sanskrit",
+"meaning": "Joy, gladness",
+"tag": "middle"
+},
+{
+"id": "anagh-boy",
+"name": "Anagh",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Faultless, without blemish",
+"tag": "middle"
+},
+{
+"id": "sattva-boy",
+"name": "Sattva",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Essence; clarity of being",
+"tag": "middle"
+},
+{
+"id": "vinay-boy",
+"name": "Vinay",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Modesty; good conduct",
+"tag": "middle"
+},
+{
+"id": "nirmit-boy",
+"name": "Nirmit",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Shaped, brought into being",
+"tag": "middle"
+},
+{
+"id": "udaan-boy",
+"name": "Udaan",
+"gender": "boy",
+"origin": "Hindi",
+"meaning": "A flight; a taking off",
+"tag": "middle"
+},
+{
+"id": "advay-boy",
+"name": "Advay",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Without a second; whole",
+"tag": "middle"
+},
+{
+"id": "anant-boy",
+"name": "Anant",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Endless",
+"tag": "middle"
+},
+{
+"id": "samvit-boy",
+"name": "Samvit",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Awareness",
+"tag": "middle"
+},
+{
+"id": "nishant-boy",
+"name": "Nishant",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "The end of night; daybreak",
+"tag": "middle"
+},
+{
+"id": "pranay-boy",
+"name": "Pranay",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Affection; a bond between people",
+"tag": "middle"
+},
+{
+"id": "saransh-boy",
+"name": "Saransh",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "The essence, the heart of the matter",
+"tag": "middle"
+},
+{
+"id": "viraaj-boy",
+"name": "Viraaj",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "To shine out; resplendent",
+"tag": "middle"
+},
+{
+"id": "saral-boy",
+"name": "Saral",
+"gender": "boy",
+"origin": "Sanskrit / Hindi",
+"meaning": "Straight, simple, honest",
+"tag": "middle"
+},
+{
+"id": "samarth-boy",
+"name": "Samarth",
+"gender": "boy",
+"origin": "Sanskrit",
+"meaning": "Capable; equal to what is asked",
+"tag": "middle"
+},
+{
+"id": "ruhaan-boy",
+"name": "Ruhaan",
+"gender": "boy",
+"origin": "Persian / Modern Indian",
+"meaning": "Of the spirit",
+"tag": "middle"
+},
+{
+"id": "bayu-boy",
+"name": "Bayu",
+"gender": "boy",
+"origin": "Indonesian (from Vayu)",
+"meaning": "The wind",
+"tag": "middle"
+},
+{
+"id": "teja-boy",
+"name": "Teja",
+"gender": "boy",
+"origin": "Indonesian / Sanskrit",
+"meaning": "Radiance",
+"tag": "middle"
+},
+{
+"id": "satya-boy",
+"name": "Satya",
+"gender": "boy",
+"origin": "Indonesian / Sanskrit",
+"meaning": "Truth",
+"tag": "middle"
+},
+{
+"id": "wira-boy",
+"name": "Wira",
+"gender": "boy",
+"origin": "Indonesian (from Vira)",
+"meaning": "Courage; a hero",
+"tag": "middle"
+},
+{
+"id": "danu-boy",
+"name": "Danu",
+"gender": "boy",
+"origin": "Indonesian / Sanskrit",
+"meaning": "A bow; also a river spirit",
+"tag": "middle"
+},
+{
+"id": "tirta-boy",
+"name": "Tirta",
+"gender": "boy",
+"origin": "Indonesian / Sanskrit",
+"meaning": "Water; a sacred spring",
+"tag": "middle"
+},
+{
+"id": "langit-boy",
+"name": "Langit",
+"gender": "boy",
+"origin": "Indonesian",
+"meaning": "The sky",
+"tag": "middle"
+},
+{
+"id": "fajar-boy",
+"name": "Fajar",
+"gender": "boy",
+"origin": "Indonesian / Arabic",
+"meaning": "Dawn",
+"tag": "middle"
+},
+{
+"id": "senja-boy",
+"name": "Senja",
+"gender": "boy",
+"origin": "Indonesian",
+"meaning": "Dusk",
+"tag": "middle"
+},
+{
+"id": "dipta-boy",
+"name": "Dipta",
+"gender": "boy",
+"origin": "Indonesian / Sanskrit",
+"meaning": "Blazing, brilliant",
+"tag": "middle"
+},
+{
+"id": "narin-boy",
+"name": "Narin",
+"gender": "boy",
+"origin": "Thai",
+"meaning": "A man of worth",
+"tag": "middle"
+},
+{
+"id": "anan-boy",
+"name": "Anan",
+"gender": "boy",
+"origin": "Thai (from Ananda)",
+"meaning": "Joy without end",
+"tag": "middle"
+},
+{
+"id": "thanat-boy",
+"name": "Thanat",
+"gender": "boy",
+"origin": "Thai",
+"meaning": "Well provided for",
+"tag": "middle"
+},
+{
+"id": "chai-boy",
+"name": "Chai",
+"gender": "boy",
+"origin": "Thai",
+"meaning": "Victory; also the heart",
+"tag": "middle"
+},
+{
+"id": "nalin-boy",
+"name": "Nalin",
+"gender": "boy",
+"origin": "Sanskrit / Thai",
+"meaning": "The lotus",
+"tag": "middle"
+},
+{
+"id": "kanok-boy",
+"name": "Kanok",
+"gender": "boy",
+"origin": "Thai",
+"meaning": "Gold",
+"tag": "middle"
+},
+{
+"id": "veasna-boy",
+"name": "Veasna",
+"gender": "boy",
+"origin": "Khmer",
+"meaning": "Destiny, what is meant for you",
+"tag": "middle"
+},
+{
+"id": "sovan-boy",
+"name": "Sovan",
+"gender": "boy",
+"origin": "Khmer (from Suvarna)",
+"meaning": "Gold",
+"tag": "middle"
+},
+{
+"id": "rithy-boy",
+"name": "Rithy",
+"gender": "boy",
+"origin": "Khmer",
+"meaning": "Strength, power",
+"tag": "middle"
+},
+{
+"id": "dara-boy",
+"name": "Dara",
+"gender": "boy",
+"origin": "Khmer / Sanskrit",
+"meaning": "A star",
+"tag": "middle"
+},
+{
+"id": "vannak-boy",
+"name": "Vannak",
+"gender": "boy",
+"origin": "Khmer",
+"meaning": "Bright, of good colour",
+"tag": "middle"
+},
+{
+"id": "thura-boy",
+"name": "Thura",
+"gender": "boy",
+"origin": "Burmese (from Sura)",
+"meaning": "Brave; a hero",
+"tag": "middle"
+},
+{
+"id": "aung-boy",
+"name": "Aung",
+"gender": "boy",
+"origin": "Burmese",
+"meaning": "To come through, to succeed",
+"tag": "middle"
+},
+{
+"id": "hiran-boy",
+"name": "Hiran",
+"gender": "boy",
+"origin": "Sanskrit / Sinhala",
+"meaning": "Gold",
+"tag": "middle"
+},
+{
+"id": "sanath-boy",
+"name": "Sanath",
+"gender": "boy",
+"origin": "Sinhala / Sanskrit",
+"meaning": "Ancient, eternal",
+"tag": "middle"
+},
+{
+"id": "dinuk-boy",
+"name": "Dinuk",
+"gender": "boy",
+"origin": "Sinhala",
+"meaning": "Of the day; bright",
+"tag": "middle"
+},
+{
+"id": "kavith-boy",
+"name": "Kavith",
+"gender": "boy",
+"origin": "Sinhala / Sanskrit",
+"meaning": "A poet",
+"tag": "middle"
+},
+{
+"id": "nimal-boy",
+"name": "Nimal",
+"gender": "boy",
+"origin": "Sinhala / Malayalam",
+"meaning": "Pure, without a stain",
+"tag": "middle"
+},
+{
+"id": "norbu-boy",
+"name": "Norbu",
+"gender": "boy",
+"origin": "Tibetan",
+"meaning": "A jewel",
+"tag": "middle"
+},
+{
+"id": "tashi-boy",
+"name": "Tashi",
+"gender": "boy",
+"origin": "Tibetan",
+"meaning": "Auspicious; good fortune",
+"tag": "middle"
+},
+{
+"id": "jigme-boy",
+"name": "Jigme",
+"gender": "boy",
+"origin": "Tibetan",
+"meaning": "Fearless",
+"tag": "middle"
+},
+{
+"id": "metta-girl",
+"name": "Metta",
+"gender": "girl",
+"origin": "Pali",
+"meaning": "Loving kindness, the first of the four virtues",
+"tag": "middle"
+},
+{
+"id": "karuna-girl",
+"name": "Karuna",
+"gender": "girl",
+"origin": "Pali / Sanskrit",
+"meaning": "Compassion",
+"tag": "middle"
+},
+{
+"id": "mudita-girl",
+"name": "Mudita",
+"gender": "girl",
+"origin": "Pali",
+"meaning": "Joy felt at someone else's good fortune",
+"tag": "middle"
+},
+{
+"id": "upeksha-girl",
+"name": "Upeksha",
+"gender": "girl",
+"origin": "Sanskrit / Pali",
+"meaning": "Equanimity; a steady mind",
+"tag": "middle"
+},
+{
+"id": "sati-girl",
+"name": "Sati",
+"gender": "girl",
+"origin": "Pali",
+"meaning": "Mindfulness; being present",
+"tag": "middle"
+},
+{
+"id": "pragya-girl",
+"name": "Pragya",
+"gender": "girl",
+"origin": "Sanskrit / Pali",
+"meaning": "Wisdom, insight",
+"tag": "middle"
+},
+{
+"id": "shanti-girl",
+"name": "Shanti",
+"gender": "girl",
+"origin": "Sanskrit",
+"meaning": "Peace",
+"tag": "middle"
+},
+{
+"id": "sumana-girl",
+"name": "Sumana",
+"gender": "girl",
+"origin": "Pali / Sanskrit",
+"meaning": "Good hearted; also a flower",
+"tag": "middle"
+},
+{
+"id": "maitri-girl",
+"name": "Maitri",
+"gender": "girl",
+"origin": "Sanskrit",
+"meaning": "Friendliness, goodwill",
+"tag": "middle"
+},
+{
+"id": "sukha-girl",
+"name": "Sukha",
+"gender": "girl",
+"origin": "Pali / Sanskrit",
+"meaning": "Ease, contentment",
+"tag": "middle"
+},
+{
+"id": "samatha-girl",
+"name": "Samatha",
+"gender": "girl",
+"origin": "Pali",
+"meaning": "Calm abiding; tranquillity",
+"tag": "middle"
+},
+{
+"id": "vimala-girl",
+"name": "Vimala",
+"gender": "girl",
+"origin": "Sanskrit / Pali",
+"meaning": "Spotless",
+"tag": "middle"
+},
+{
+"id": "kirana-girl",
+"name": "Kirana",
+"gender": "girl",
+"origin": "Indonesian / Sanskrit",
+"meaning": "A ray of light",
+"tag": "middle"
+},
+{
+"id": "sekar-girl",
+"name": "Sekar",
+"gender": "girl",
+"origin": "Javanese",
+"meaning": "A flower",
+"tag": "middle"
+},
+{
+"id": "melati-girl",
+"name": "Melati",
+"gender": "girl",
+"origin": "Indonesian",
+"meaning": "The jasmine",
+"tag": "middle"
+},
+{
+"id": "intan-girl",
+"name": "Intan",
+"gender": "girl",
+"origin": "Indonesian",
+"meaning": "A diamond",
+"tag": "middle"
+},
+{
+"id": "ratna-girl",
+"name": "Ratna",
+"gender": "girl",
+"origin": "Indonesian / Sanskrit",
+"meaning": "A jewel",
+"tag": "middle"
+},
+{
+"id": "lestari-girl",
+"name": "Lestari",
+"gender": "girl",
+"origin": "Indonesian",
+"meaning": "Enduring, everlasting",
+"tag": "middle"
+},
+{
+"id": "asri-girl",
+"name": "Asri",
+"gender": "girl",
+"origin": "Indonesian",
+"meaning": "Beautiful and in harmony",
+"tag": "middle"
+},
+{
+"id": "anggun-girl",
+"name": "Anggun",
+"gender": "girl",
+"origin": "Indonesian",
+"meaning": "Graceful, poised",
+"tag": "middle"
+},
+{
+"id": "bulan-girl",
+"name": "Bulan",
+"gender": "girl",
+"origin": "Indonesian / Malay",
+"meaning": "The moon",
+"tag": "middle"
+},
+{
+"id": "cahaya-girl",
+"name": "Cahaya",
+"gender": "girl",
+"origin": "Indonesian",
+"meaning": "Light",
+"tag": "middle"
+},
+{
+"id": "sari-girl",
+"name": "Sari",
+"gender": "girl",
+"origin": "Indonesian / Javanese",
+"meaning": "Essence; the heart of a flower",
+"tag": "middle"
+},
+{
+"id": "dian-girl",
+"name": "Dian",
+"gender": "girl",
+"origin": "Indonesian",
+"meaning": "A candle; a small steady light",
+"tag": "middle"
+},
+{
+"id": "mega-girl",
+"name": "Mega",
+"gender": "girl",
+"origin": "Indonesian / Sanskrit",
+"meaning": "A cloud",
+"tag": "middle"
+},
+{
+"id": "nilam-girl",
+"name": "Nilam",
+"gender": "girl",
+"origin": "Indonesian / Sanskrit",
+"meaning": "Sapphire blue",
+"tag": "middle"
+},
+{
+"id": "sirin-girl",
+"name": "Sirin",
+"gender": "girl",
+"origin": "Thai",
+"meaning": "Radiance, beauty",
+"tag": "middle"
+},
+{
+"id": "mali-girl",
+"name": "Mali",
+"gender": "girl",
+"origin": "Thai",
+"meaning": "The jasmine",
+"tag": "middle"
+},
+{
+"id": "manee-girl",
+"name": "Manee",
+"gender": "girl",
+"origin": "Thai (from Mani)",
+"meaning": "A gem",
+"tag": "middle"
+},
+{
+"id": "achara-girl",
+"name": "Achara",
+"gender": "girl",
+"origin": "Thai",
+"meaning": "Good conduct; a pretty angel",
+"tag": "middle"
+},
+{
+"id": "thida-girl",
+"name": "Thida",
+"gender": "girl",
+"origin": "Thai (from Duhita)",
+"meaning": "A daughter",
+"tag": "middle"
+},
+{
+"id": "kanya-girl",
+"name": "Kanya",
+"gender": "girl",
+"origin": "Thai / Sanskrit",
+"meaning": "A young woman",
+"tag": "middle"
+},
+{
+"id": "sopheak-girl",
+"name": "Sopheak",
+"gender": "girl",
+"origin": "Khmer",
+"meaning": "Gentle, well mannered",
+"tag": "middle"
+},
+{
+"id": "bopha-girl",
+"name": "Bopha",
+"gender": "girl",
+"origin": "Khmer",
+"meaning": "A flower",
+"tag": "middle"
+},
+{
+"id": "chenda-girl",
+"name": "Chenda",
+"gender": "girl",
+"origin": "Khmer",
+"meaning": "Thoughtful, quick minded",
+"tag": "middle"
+},
+{
+"id": "nandar-girl",
+"name": "Nandar",
+"gender": "girl",
+"origin": "Burmese",
+"meaning": "Delight",
+"tag": "middle"
+},
+{
+"id": "thiri-girl",
+"name": "Thiri",
+"gender": "girl",
+"origin": "Burmese (from Sri)",
+"meaning": "Splendour",
+"tag": "middle"
+},
+{
+"id": "hiruni-girl",
+"name": "Hiruni",
+"gender": "girl",
+"origin": "Sinhala",
+"meaning": "Of the sun",
+"tag": "middle"
+},
+{
+"id": "nethmi-girl",
+"name": "Nethmi",
+"gender": "girl",
+"origin": "Sinhala",
+"meaning": "Beloved; of the eyes",
+"tag": "middle"
+},
+{
+"id": "oshadi-girl",
+"name": "Oshadi",
+"gender": "girl",
+"origin": "Sinhala / Sanskrit",
+"meaning": "A healing herb",
+"tag": "middle"
+},
+{
+"id": "senuri-girl",
+"name": "Senuri",
+"gender": "girl",
+"origin": "Sinhala",
+"meaning": "Gentle and bright",
+"tag": "middle"
+},
+{
+"id": "rashmi-girl",
+"name": "Rashmi",
+"gender": "girl",
+"origin": "Sanskrit / Sinhala",
+"meaning": "A ray of light",
+"tag": "middle"
+},
+{
+"id": "dilini-girl",
+"name": "Dilini",
+"gender": "girl",
+"origin": "Sinhala",
+"meaning": "One who shines",
+"tag": "middle"
+},
+{
+"id": "pema-girl",
+"name": "Pema",
+"gender": "girl",
+"origin": "Tibetan",
+"meaning": "The lotus",
+"tag": "middle"
+},
+{
+"id": "dechen-girl",
+"name": "Dechen",
+"gender": "girl",
+"origin": "Tibetan",
+"meaning": "Great bliss",
+"tag": "middle"
+},
+{
+"id": "yangchen-girl",
+"name": "Yangchen",
+"gender": "girl",
+"origin": "Tibetan",
+"meaning": "Melodious; holder of song",
+"tag": "middle"
+},
+{
+"id": "deki-girl",
+"name": "Deki",
+"gender": "girl",
+"origin": "Tibetan",
+"meaning": "Happiness, wellbeing",
+"tag": "middle"
+},
+{
+"id": "anila-girl",
+"name": "Anila",
+"gender": "girl",
+"origin": "Sanskrit",
+"meaning": "Of the wind",
+"tag": "middle"
+},
+{
+"id": "arani-girl",
+"name": "Arani",
+"gender": "girl",
+"origin": "Sanskrit",
+"meaning": "The wood that kindles the fire",
+"tag": "middle"
+},
+{
+"id": "nira-girl",
+"name": "Nira",
+"gender": "girl",
+"origin": "Sanskrit / Hindi",
+"meaning": "Water",
+"tag": "middle"
 }
 ];
