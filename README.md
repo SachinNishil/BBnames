@@ -31,7 +31,7 @@ and iOS Safari offers "Add to Home Screen".
 | `data/changelog.js` | Version history, newest first; the app reads the current version from it |
 | `sync.js` | Supabase sync: queue, push, pull, live updates |
 
-v1.4 through v1.9 need no migration.
+v1.4 through v1.9.1 need no migration.
 
 ## Shipping a version
 
@@ -167,7 +167,16 @@ profile names.
 
 ## Why a swipe never comes back
 
-Two layers, because this went wrong once.
+Three layers, because this went wrong twice.
+
+The first and most important is pagination. Supabase returns at most 1000 rows
+for a plain `select`, with no error and no indication that anything is missing.
+Once the two sets of votes together passed a thousand, every pull handed the app
+a truncated list, so votes past the cap looked unmade and their names went back
+into the deck. `selectAll()` in `sync.js` reads in pages of 1000 until a short
+page comes back. Votes, names and comments all go through it. This is the kind
+of bug that cannot appear until the data is large enough, so test with volume,
+not with a handful of rows.
 
 In `sync.js`, a flush removes only the entries that actually uploaded, and it
 removes them from the queue as it stands when the flush finishes. The earlier

@@ -101,14 +101,36 @@
     return out;
   }
 
+  /* Supabase caps a plain select at 1000 rows. Past that the extra rows are
+     simply absent, with no error, so every vote beyond the cap looked unmade
+     and its name went back into the deck. Read in pages until a short one
+     comes back. Order is fixed so the pages cannot overlap or skip. */
+  var PAGE = 1000;
+  function selectAll(table, order) {
+    var rows = [], from = 0;
+    function step() {
+      var q = S.client.from(table).select('*').range(from, from + PAGE - 1);
+      (order || []).forEach(function (col) { q = q.order(col, { ascending: true }); });
+      return q.then(function (r) {
+        if (r.error) throw r.error;
+        var got = r.data || [];
+        rows = rows.concat(got);
+        if (got.length < PAGE) return rows;
+        from += PAGE;
+        return step();
+      });
+    }
+    return step();
+  }
+
   function pull() {
     var c = S.client;
     return Promise.all([
-      c.from('votes').select('*'),
-      c.from('names').select('*'),
+      selectAll('votes', ['profile_id', 'name_id']).then(function (d) { return { data: d }; }),
+      selectAll('names', ['id']).then(function (d) { return { data: d }; }),
       c.from('profiles').select('*'),
       c.from('settings').select('*'),
-      c.from('comments').select('*').order('created_at', { ascending: true })
+      selectAll('comments', ['created_at']).then(function (d) { return { data: d }; })
     ]).then(function (res) {
       var err = res.filter(function (r) { return r.error; })[0];
       if (err) { setStatus('error', err.error.message); return; }
