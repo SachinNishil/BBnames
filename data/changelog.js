@@ -7,7 +7,8 @@ window.CHANGELOG = [
   "date": "2026-11-28",
   "title": "Repeat bug fixed, every filter, 100 more names",
   "changes": [
-    "Fixed names coming back round again. A swipe made while an earlier batch was still uploading was being dropped from the queue, and the next sync then handed that name back to the deck. Anything queued mid-upload now survives, and a sync can no longer undo a swipe that has not been confirmed yet.",
+    "Fixed names coming back round again. A swipe made while an earlier upload was still in flight was being dropped from the outgoing queue, and the next sync then handed that name back to the deck. Reproduced it: thirty swipes, only ten saved, four names cycling round. Anything queued mid-upload now survives.",
+    "Added a second layer underneath that. Every vote is held as unconfirmed until it comes back from the database. If a sync arrives without it, the app keeps its own answer and pushes it again rather than putting the name back in the deck. Tested with one write in three silently lost: nothing repeats and nothing is dropped.",
     "Thirteen filters in Matches instead of seven, covering every combination the two of you can produce: both starred, each person's stars, each person's yes, liked by both without stars, one yes and one no, passed by both, waiting on each of you, neither has seen, and has comments.",
     "A filter on one person now shows everything they marked, not just the ones that became matches. Results are grouped by what the other person said: starred at the top, then liked, then passed, then not yet seen.",
     "100 more names, 50 per gender, under a new Middle ground tag. Contemporary and international with Indian roots, leaning on Buddhist virtues, Indonesian, Thai, Khmer, Burmese, Sinhala and Tibetan, and chosen to sit on neither side of a faith."
